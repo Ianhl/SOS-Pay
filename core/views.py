@@ -22,10 +22,11 @@ def initiate_payment(request: HttpRequest) -> HttpResponse:
 def verify_payment(request: HttpRequest, ref: str) -> HttpResponse:
     payment = get_object_or_404(Payment, ref=ref)
     verified = payment.verify_payment()
-    if verified:
-        messages.success(request, "Verification S   uccessful")
-    else:
-       return redirect('initiate-payment')
+    if verified == True:
+        messages.success(request, "Verification Successful")
+    else: 
+       messages.error(request, "Verification Bad")
+    return redirect('initiate-payment')
 
 
 # def verify(request, id):
