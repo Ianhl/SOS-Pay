@@ -33,8 +33,6 @@ class Payment(models.Model):
     
 
     def verify_payment(self):
-        # paystack = PayStack()
-        # status, result = paystack.verify_payment(self.ref, self.amount)
         transaction = Transaction(authorization_key= settings.PAYSTACK_SECRET_KEY)
         response = transaction.verify(self.ref)
         data = JsonResponse(response, safe=False)
