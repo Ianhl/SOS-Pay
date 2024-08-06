@@ -1,0 +1,100 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>        <!--https://boxicons.com/ -->
+
+    <title>Login & Register Page  ->> Code With Patel</title>
+</head>
+
+<body>
+    {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role = "alert">
+                    <strong>Message:</strong> {{ message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+        {% endfor %}
+
+    <div class="container" id="container">
+        <div class="form-container sign-up">
+            <form action="/login/signup" method="post">
+            {% csrf_token %}
+                <h1>Create Account</h1>
+                <div class="social-icons">
+                    <a href="#" class="icons"><i class='bx bxl-google'></i></a>
+                    <a href="#" class="icons"><i class='bx bxl-facebook'></i></a>
+                    <a href="#" class="icons"><i class='bx bxl-github'></i></a>
+                    <a href="#" class="icons"><i class='bx bxl-linkedin'></i></a>
+                </div>
+                <span>Register with E-mail</span>
+                <input type="text" id="fname" name="fname" placeholder="First Name" Required>
+                <input type="text" id="lname" name="lname" placeholder="Last Name" Required>
+                <input type="email" id="email" name="email"placeholder="Enter E-mail" Required>
+                <input type="password" id="pass1" name="pass1" placeholder="Enter Password" Required>
+                <input type="password" id="pass2" name="pass2" placeholder="Confirm Password" Required>
+                <button type="submit">Sign Up</button>
+            </form>
+        </div>
+
+
+        <div class="form-container sign-in">
+            <form action ="/login/signin" method="post">
+            {% csrf_token %}
+                <h1>Sign In</h1>
+                <div class="social-icons">
+                    <a href="#" class="icons"><i class='bx bxl-google'></i></a>
+                    <a href="#" class="icons"><i class='bx bxl-facebook'></i></a>
+                    <a href="#" class="icons"><i class='bx bxl-github'></i></a>
+                    <a href="#" class="icons"><i class='bx bxl-linkedin'></i></a>
+                </div>
+                <span>Login With Email & Password</span>
+                <input type="text" id="email" name="email" placeholder="Enter Email">
+                <input type="password" id="pass1" name="pass1" placeholder="Enter Password">
+                <a href="#">Forget Password?</a>
+                <button type="submit">Sign In</button>
+            </form>
+        </div>
+
+
+        <div class="toggle-container">
+            <div class="toggle">
+                <div class="toggle-panel toggle-left">
+                    <h1>Welcome To <br>HGIC Shops</h1>
+                    <p>Sign in With ID & Passowrd</p>
+                    <a href="/login/signin"> <button class="hidden" id="login">Sign In</button></a>
+                </div>
+                <div class="toggle-panel toggle-right">
+                    <h1>Hii Students</h1>
+                    <p>Sign up to "HGIC Shops" to start seemless shopping</p>
+                    <a href="/login/signup"> <button class="hidden" id="register">Sign Up</button></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const container = document.getElementById('container');
+        const registerBtn = document.getElementById('register');
+        const loginBtn = document.getElementById('login');
+        
+        container.classList.add("{{status}}");
+
+        registerBtn.addEventListener('click', () => {
+            container.classList.add("active");
+        });
+
+        loginBtn.addEventListener('click', () => {
+            container.classList.remove("active");
+        });
+    </script>
+</body>
+
+</html>

@@ -24,7 +24,7 @@ body{
     overflow: hidden;
     width: 768px;
     max-width: 100%;
-    min-height: 480px;
+    min-height: 500px;
 }
 
 .container p{
@@ -46,7 +46,7 @@ body{
 }
 
 .container button{
-    background-color: rgb(255, 13, 13);
+    background-color: rgb(13, 118, 255);
     color: #fff;
     font-size: 12px;
     padding: 10px 45px;
@@ -160,7 +160,7 @@ body{
 }
 
 .toggle{
-    background-color: rgba(255, 4, 4, 0.952);
+    background-color: rgba(4, 121, 255, 0.952);
     height: 100%;
     color: #fff;
     position: relative;

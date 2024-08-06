@@ -13,8 +13,23 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 import os
 
+
+from . info import *
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# STATICFILES_DIRS = [BASE_DIR/ "static"]
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+
+EMAIL_HOST = 'live.smtp.mailtrap.io'
+EMAIL_HOST_USER = 'api'
+EMAIL_HOST_PASSWORD = '99fb622e0f2ac71810fe6953df4c0ea9'
+EMAIL_PORT = '587'
+
 
 
 # Quick-start development settings - unsuitable for production
@@ -41,10 +56,12 @@ INSTALLED_APPS = [
     'crispy_forms',
     'core',
     'crispy_bootstrap4',
-    'authuser',
+    'authentication',
+    # 'authtools',
+    # 'authuser',
 ]
 
-AUTH_USER_MODEL = 'authuser.User'
+AUTH_USER_MODEL = 'authentication.User'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -61,7 +78,7 @@ ROOT_URLCONF = 'paystackpay.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ["templates"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -129,6 +146,9 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
+STATICFILES_DIRS = [
+    BASE_DIR / "static"
+    ] 
+                    
 PAYSTACK_SECRET_KEY = 'sk_test_ae2269b000a167f81ec13904fae71fdaaae9744b'
 PAYSTACK_PUBLIC_KEY = 'pk_test_95a53b4dcfd919ddc7071a1d4162785fd0ed0613'
