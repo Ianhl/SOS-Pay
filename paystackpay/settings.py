@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 import os
 
+from django.forms import IntegerField
+
 
 from . info import *
 
@@ -25,9 +27,9 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
 
-EMAIL_HOST = 'live.smtp.mailtrap.io'
-EMAIL_HOST_USER = 'api'
-EMAIL_HOST_PASSWORD = '99fb622e0f2ac71810fe6953df4c0ea9'
+EMAIL_HOST = 'smpt.gmail.com'
+EMAIL_HOST_USER = 'hgicpay@gmail.com'
+EMAIL_HOST_PASSWORD = 'sospay1990'
 EMAIL_PORT = '587'
 
 
@@ -57,11 +59,15 @@ INSTALLED_APPS = [
     'core',
     'crispy_bootstrap4',
     'authentication',
+    'wallet',
+    'encrypted_model_fields',
     # 'authtools',
     # 'authuser',
 ]
 
 AUTH_USER_MODEL = 'authentication.User'
+
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

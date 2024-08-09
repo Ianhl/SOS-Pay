@@ -7,6 +7,10 @@ from paystackpay import settings
 from django.core.mail import send_mail
 # from django.contrib.auth.models import User
 # from django.contrib.auth import get_user_model
+from wallet.models import Wallet
+
+# wallets are owned by users.
+
 
 
 # User = get_user_model
@@ -40,6 +44,11 @@ def signup(request):
         myuser.last_name = lname
 
         myuser.save()
+        Wallet.objects.create(
+            user = myuser,
+            balance = 0,
+            password = pass1,
+        )
 
         messages.success(request, "Account successfully created.")
 
@@ -68,7 +77,8 @@ def signin(request):
         if user is not None:
             login(request, user)
             fname = user.first_name
-            return render(request, "authentication/index.html", {'fname': fname})
+            # return render(request, "authentication/index.html", {'fname': fname})
+            return redirect('setpin')
         else:
             messages.error(request, "Bad Credentials")
             return redirect('home')
