@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.conf import settings
 from .models import Payment
 from pypaystack import Transaction, Customer, Plan
+from wallet.models import Wallet
 
 # Create your views here.
 
@@ -23,6 +24,11 @@ def verify_payment(request: HttpRequest, ref: str) -> HttpResponse:
     payment = get_object_or_404(Payment, ref=ref)
     verified = payment.verify_payment()
     if verified == True:
+        user = request.user
+        # cwallet = Wallet(user=user)
+        # wallet_id = cwallet.id
+        wallet = get_object_or_404(Wallet, user = user)
+        Wallet.deposit(wallet,payment.amount)
         messages.success(request, "Verification Successful")
     else: 
        messages.error(request, "Verification Bad")

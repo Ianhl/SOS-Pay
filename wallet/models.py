@@ -13,8 +13,7 @@ class Wallet(models.Model):
     uid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user = models.OneToOneField(User, on_delete=models.SET_NULL, null=True)
     balance = models.DecimalField(("balance"), max_digits=100, decimal_places=2, default=0)
-    password = models.CharField(max_length=20, default="")
-    hashed_password = make_password(password)
+    pin = models.IntegerField(max_length=6, default=000000)
     created = models.DateTimeField(auto_now_add=True)
     
 
@@ -23,9 +22,9 @@ class Wallet(models.Model):
     
         self.transaction_set.create(
             value=value,
-            running_balance=self.current_balance + value
+            running_balance=self.balance + value
         )
-        self.current_balance += value
+        self.balance += value
         self.save()
 
 
@@ -47,9 +46,9 @@ class Wallet(models.Model):
 
         self.transaction_set.create(
             value=-value,
-            running_balance=self.current_balance - value
+            running_balance=self.balance - value
         )
-        self.current_balance -= value
+        self.balance -= value
         self.save()
 
     def transfer(self, wallet, value):

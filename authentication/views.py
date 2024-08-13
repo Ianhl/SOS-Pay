@@ -28,6 +28,8 @@ def signup(request):
         email = request.POST['email']
         pass1 = request.POST['pass1']
         pass2 = request.POST['pass2']
+        pin1 = request.POST['pin1']
+        pin2 = request.POST['pin2']
 
         if User.objects.filter(email=email):
             messages.error(request, "Email already exists. Try other email")
@@ -35,6 +37,9 @@ def signup(request):
 
         if pass1 != pass2:
             messages.error(request, "Passwords didn't match")
+
+        if pin1 != pin2:
+            messages.error(request, "Pins didn't match")
 
         
         
@@ -47,7 +52,7 @@ def signup(request):
         Wallet.objects.create(
             user = myuser,
             balance = 0,
-            password = pass1,
+            pin = pin1,
         )
 
         messages.success(request, "Account successfully created.")
@@ -78,7 +83,7 @@ def signin(request):
             login(request, user)
             fname = user.first_name
             # return render(request, "authentication/index.html", {'fname': fname})
-            return redirect('setpin')
+            return redirect('home')
         else:
             messages.error(request, "Bad Credentials")
             return redirect('home')

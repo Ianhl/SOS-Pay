@@ -28,18 +28,15 @@
             <form action="/login/signup" method="post">
             {% csrf_token %}
                 <h1>Create Account</h1>
-                <div class="social-icons">
-                    <a href="#" class="icons"><i class='bx bxl-google'></i></a>
-                    <a href="#" class="icons"><i class='bx bxl-facebook'></i></a>
-                    <a href="#" class="icons"><i class='bx bxl-github'></i></a>
-                    <a href="#" class="icons"><i class='bx bxl-linkedin'></i></a>
-                </div>
+                <br>
                 <span>Register with E-mail</span>
                 <input type="text" id="fname" name="fname" placeholder="First Name" Required>
                 <input type="text" id="lname" name="lname" placeholder="Last Name" Required>
                 <input type="email" id="email" name="email"placeholder="Enter E-mail" Required>
                 <input type="password" id="pass1" name="pass1" placeholder="Enter Password" Required>
                 <input type="password" id="pass2" name="pass2" placeholder="Confirm Password" Required>
+                <input type="password" id="pin1" name="pin1" placeholder="Enter 6 digit pin" Required>
+                <input type="password" id="pin2" name="pin2" placeholder="Confirm 6 digit pin" Required>
                 <button type="submit">Sign Up</button>
             </form>
         </div>
