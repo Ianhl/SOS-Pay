@@ -1,5 +1,4 @@
 from django.conf import settings
-import requests
 from django.contrib import messages
 from django.http import HttpRequest, HttpResponse, JsonResponse
 from pypaystack import Transaction

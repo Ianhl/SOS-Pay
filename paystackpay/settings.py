@@ -60,7 +60,7 @@ INSTALLED_APPS = [
     'crispy_bootstrap4',
     'authentication',
     'wallet',
-    'encrypted_model_fields',
+    # 'encrypted_model_fields',
     # 'authtools',
     # 'authuser',
 ]
