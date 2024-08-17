@@ -93,6 +93,9 @@ def signout(request):
     messages.success(request, "Logged out successfully")
     return redirect('home')
 
+def pin(request):
+    return render(request, "authentication/pin.html")
+
 # def signinup(request):
 #     status = "remove"
 #     return render(request, "authentication/signinup.html", {"status":status})
