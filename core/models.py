@@ -14,11 +14,8 @@ class Payment(models.Model):
     verified = models.BooleanField(default=False)
     date_created = models.DateTimeField(auto_now_add=True)
 
-
     class Meta:
         ordering = ('-date_created',)
-
-     
     
     def save(self, *args, **kwargs) -> None:
         while not self.ref:
@@ -30,7 +27,6 @@ class Payment(models.Model):
 
     def amount_value(self) -> int:
         return self.amount *100
-    
 
     def verify_payment(self):
         transaction = Transaction(authorization_key= settings.PAYSTACK_SECRET_KEY)

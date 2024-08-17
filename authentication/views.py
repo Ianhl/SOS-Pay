@@ -65,8 +65,6 @@ def signup(request):
         receipient_list = [myuser.email]
         send_mail(subject=subject, message=message, from_email=from_email, recipient_list=receipient_list, fail_silently=True)
 
-
-
         return redirect('signin')
     
     return render(request, "authentication/signinup.html", {"status":status})
