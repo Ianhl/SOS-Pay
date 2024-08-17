@@ -26,7 +26,7 @@
       
       <nav class="nav">
         <div class="logo">
-          <h2>SOS Pay.</h2>
+          <a href=""><h2>SOS Pay.</h2></a>
         </div>
 
         
@@ -79,12 +79,12 @@
           <div class="grid-item-1">
             <h1 class="main-heading">
                 {% if user.is_authenticated %}
-                    Hello <span>{{ fname }}</span>
+                    {{ greeting }} <span>{{ fname }}</span>
                     <br>
                     <br>
                     Enjoy endless possiblities.
                 {% else %}
-                    Hello <span> User</span>
+                    Welcome to <span> SOS Pay</span>
                     <br>
                     <br>
                     Kindly sign-in to enjoy endless possiblities.
@@ -95,9 +95,9 @@
             </p>
             {% if user.is_authenticated %}
               <div class="btn_wrapper">
-                <button class="btn view_more_btn">
+                <a href="/wallet"><button class="btn view_more_btn">
                   Wallet <i class="ri-arrow-right-line"></i>
-                </button>
+                </button></a>
 
                 <button class="btn documentation_btn">Shop Now</button>
               </div>
