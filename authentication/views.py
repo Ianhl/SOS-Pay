@@ -9,7 +9,7 @@ from django.core.mail import send_mail
 # from django.contrib.auth import get_user_model
 from wallet.models import Wallet
 from django.shortcuts import get_object_or_404, render
-
+from main.views import main
 
 
 # wallets are owned by users.
@@ -86,18 +86,18 @@ def signin(request):
                 return redirect('pin')
             else:
                 login(request, user)
-                return redirect('home')
+                return redirect('main')
             
         else:
             messages.error(request, "Bad Credentials")
-            return redirect('home')
+            return redirect('signin')
 
     return render(request, "authentication/signinup.html", {"status":status})
 
 def signout(request):
     logout(request)
     messages.success(request, "Logged out successfully")
-    return redirect('home')
+    return redirect('main')
 
 def pin(request):
     if request.method == "POST":

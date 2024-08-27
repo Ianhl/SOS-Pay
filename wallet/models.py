@@ -63,13 +63,10 @@ class Wallet(models.Model):
 class Transaction(models.Model):
     # The wallet that holds this transaction.
     wallet = models.ForeignKey(Wallet, on_delete=models.SET_NULL, null=True)
-
     # The value of this transaction.
     value = models.DecimalField(max_digits=100, decimal_places=2)
     # The value of the wallet at the time of this
-    # transaction. Useful for displaying transaction
-    # history.
+    # transaction.
     running_balance = models.DecimalField(max_digits=10, decimal_places=2)
-
     # The date/time of the creation of this transaction.
     created_at = models.DateTimeField(auto_now_add=True)
