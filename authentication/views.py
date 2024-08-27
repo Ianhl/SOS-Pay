@@ -8,6 +8,9 @@ from django.core.mail import send_mail
 # from django.contrib.auth.models import User
 # from django.contrib.auth import get_user_model
 from wallet.models import Wallet
+from django.shortcuts import get_object_or_404, render
+
+
 
 # wallets are owned by users.
 
@@ -28,8 +31,6 @@ def signup(request):
         email = request.POST['email']
         pass1 = request.POST['pass1']
         pass2 = request.POST['pass2']
-        pin1 = request.POST['pin1']
-        pin2 = request.POST['pin2']
 
         if User.objects.filter(email=email):
             messages.error(request, "Email already exists. Try other email")
@@ -38,8 +39,6 @@ def signup(request):
         if pass1 != pass2:
             messages.error(request, "Passwords didn't match")
 
-        if pin1 != pin2:
-            messages.error(request, "Pins didn't match")
 
         
         
@@ -52,7 +51,7 @@ def signup(request):
         Wallet.objects.create(
             user = myuser,
             balance = 0,
-            pin = pin1,
+            pin = 000000,
         )
 
         messages.success(request, "Account successfully created.")
@@ -67,7 +66,7 @@ def signup(request):
 
 
 
-        return redirect('signin')
+        return redirect('home')
     
     return render(request, "authentication/signinup.html", {"status":status})
 
@@ -80,10 +79,15 @@ def signin(request):
         user = authenticate(email=email, password=pass1)
 
         if user is not None:
-            login(request, user)
-            fname = user.first_name
+            
             # return render(request, "authentication/index.html", {'fname': fname})
-            return redirect('home')
+            if user.last_login == None:
+                login(request, user)
+                return redirect('pin')
+            else:
+                login(request, user)
+                return redirect('home')
+            
         else:
             messages.error(request, "Bad Credentials")
             return redirect('home')
@@ -96,6 +100,32 @@ def signout(request):
     return redirect('home')
 
 def pin(request):
+    if request.method == "POST":
+        p1 = request.POST['p1']
+        p2 = request.POST['p2']
+        p3 = request.POST['p3']
+        p4 = request.POST['p4']
+        p5 = request.POST['p5']
+        p6 = request.POST['p6']
+        pin1 = int(str(p1)+str(p2)+str(p3)+str(p4)+str(p5)+str(p6))
+        second_p1 = request.POST['2p1']
+        second_p2 = request.POST['2p2']
+        second_p3 = request.POST['2p3']
+        second_p4 = request.POST['2p4']
+        second_p5 = request.POST['2p5']
+        second_p6 = request.POST['2p6']
+        pin2 = int(str(second_p1)+str(second_p2)+str(second_p3)+str(second_p4)+str(second_p5)+str(second_p6))
+        
+        if pin1 != pin2:
+            messages.error(request, "Pins didn't match")
+        user = request.user
+        wallet = get_object_or_404(Wallet, user = user)
+        wallet.pin = pin
+        return redirect('home')
+        
+        
+       
+
     return render(request, "authentication/pin.html")
 
 # def signinup(request):

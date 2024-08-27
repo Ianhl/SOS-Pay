@@ -41,14 +41,14 @@
               <a href="#" class="nav_menu_link">Account</a>
             </li>
             <li class="nav_menu_item">
-              <a href="#" class="nav_menu_link">Wallet</a>
+              <a href="/wallet" class="nav_menu_link">Wallet</a>
             </li>
             <li class="nav_menu_item">
               <a href="#" class="nav_menu_link">Transactions</a>
             </li>
             {% if user.is_authenticated %}
                 <li class="nav_menu_item">
-                    <a href="#" class="nav_menu_link">Signout</a>
+                    <a href="/login/signout" class="nav_menu_link">Signout</a>
                 </li>
             {% else %}
                 <li class="nav_menu_item">
