@@ -59,14 +59,14 @@ def signup(request):
 
         #Welcome email
         subject = "Welcome to SOS Pay!"
-        message = "Hello" + myuser.first_name + "!! \n" + "Welcome to SOS Pay \n Thank You for visiting this site \n We have sent you a confirmation email. Please confirm your email address to activate your account. \n\n  Thank you "+fname
-        from_email = 'hgicpay@gmail.com'
+        message = "Hello " + myuser.first_name + "!!\n" + "Welcome to SOS Pay\n Thank You for visiting this site.\n We have sent you a confirmation email. Please confirm your email address to activate your account. \n\n  Thank you "+fname
+        from_email = 'larteyian@gmail.com'
         receipient_list = [myuser.email]
-        send_mail(subject=subject, message=message, from_email=from_email, recipient_list=receipient_list, fail_silently=True)
+        send_mail(subject, message, from_email, receipient_list, fail_silently=False)
 
 
 
-        return redirect('home')
+        return redirect('signin')
     
     return render(request, "authentication/signinup.html", {"status":status})
 
@@ -121,7 +121,7 @@ def pin(request):
         user = request.user
         wallet = get_object_or_404(Wallet, user = user)
         wallet.pin = pin
-        return redirect('home')
+        return redirect('main')
         
         
        

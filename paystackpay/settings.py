@@ -27,9 +27,9 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
 
-EMAIL_HOST = 'smpt.gmail.com'
-EMAIL_HOST_USER = 'hgicpay@gmail.com'
-EMAIL_HOST_PASSWORD = 'sospay1990'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'larteyian@gmail.com'
+EMAIL_HOST_PASSWORD = 'bnjg eojt oake yjcn'
 EMAIL_PORT = '587'
 
 
@@ -60,6 +60,7 @@ INSTALLED_APPS = [
     'crispy_bootstrap4',
     'authentication',
     'wallet',
+    'vendors',
     # 'encrypted_model_fields',
     # 'authtools',
     # 'authuser',
