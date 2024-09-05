@@ -22,6 +22,7 @@ urlpatterns = [
     path('pay/',include('core.urls')),
     path('',include('main.urls')),
     path('wallet/',include('wallet.urls')),
-    path('login/', include('authentication.urls'))
+    path('login/', include('authentication.urls')),
+    path('vendor/', include('vendors.urls'))
     # path('verify', include('core.urls')),
 ]
