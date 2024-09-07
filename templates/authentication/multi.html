@@ -1,0 +1,215 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Step Sign-Up</title>
+    <link rel="stylesheet" href="{% static 'multi.css' %}">
+</head>
+<body>
+    <div>
+        <h1>Getting to know you...</h1>
+        <div id="multi-step-form-container">
+            <!-- Form Steps / Progress Bar -->
+            <ul class="form-stepper form-stepper-horizontal text-center mx-auto pl-0">
+                <!-- Step 1 -->
+                <li class="form-stepper-active text-center form-stepper-list" step="1">
+                    <a class="mx-2">
+                        <span class="form-stepper-circle">
+                            <span>1</span>
+                        </span>
+                        <div class="label">Basic Student Details</div>
+                    </a>
+                </li>
+                <!-- Step 2 -->
+                <li class="form-stepper-unfinished text-center form-stepper-list" step="2">
+                    <a class="mx-2">
+                        <span class="form-stepper-circle text-muted">
+                            <span>2</span>
+                        </span>
+                        <div class="label text-muted">Parent details</div>
+                    </a>
+                </li>
+                <!-- Step 3 -->
+                <li class="form-stepper-unfinished text-center form-stepper-list" step="3">
+                    <a class="mx-2">
+                        <span class="form-stepper-circle text-muted">
+                            <span>3</span>
+                        </span>
+                        <div class="label text-muted">Pin Setup</div>
+                    </a>
+                </li>
+            </ul>
+            <!-- Step Wise Form Content -->
+            <form id="userAccountSetupForm" name="userAccountSetupForm" enctype="multipart/form-data" method="POST">
+            {% csrf_token %}
+                <!-- Step 1 Content -->
+                <section id="step-1" class="form-step">
+                    <h2 class="font-normal">Basic Student Details</h2>
+                    <!-- Step 1 input fields -->
+                    <div class="formbold-input-group">
+                        <label for="name" class="formbold-form-label"> Graduation year </label>
+                        <input
+                          type="number"
+                          name="grad_year"
+                          id="grad_year"
+                          placeholder="Enter your graduation year"
+                          class="formbold-form-input"
+                        />
+                    </div>
+                    <div class="formbold-input-group">
+                        <label class="formbold-form-label">
+                          What year group are you?
+                        </label>
+                
+                        <select class="formbold-form-select" name="occupation" id="occupation">
+                          <option value="Student">MYP4</option>
+                          <option value="designer">MYP5</option>
+                          <option value="fullstack">DP1</option>
+                          <option value="frontend">DP2</option>
+                        </select>
+                    </div>
+                    <div class="formbold-input-group">
+                        <label class="formbold-form-label">
+                          What hostel group are you?
+                        </label>
+                
+                        <select class="formbold-form-select" name="occupation" id="occupation">
+                          <option value="Student">Titan</option>
+                          <option value="designer">Viking</option>
+                          <option value="fullstack">Spartan</option>
+                          <option value="frontend">Trojan</option>
+                        </select>
+                    </div>
+                    <div class="formbold-input-group">
+                        <label class="formbold-form-label">
+                          What hostel are you in?
+                        </label>
+                
+                        <select class="formbold-form-select" name="occupation" id="occupation">
+                          <option value="Student">Tana</option>
+                          <option value="designer">Kariba</option>
+                          <option value="fullstack">Niger</option>
+                          <option value="frontend">Densu</option>
+                          <option value="frontend">Turkana</option>
+                          <option value="frontend">Cavally</option>
+                          <option value="frontend">Juba</option>
+                          <option value="frontend">Congo</option>
+                          <option value="frontend">Ankobra</option>
+                          <option value="frontend">Volta</option>
+                          <option value="frontend">Limpopo</option>
+                          <option value="frontend">Nile</option>
+                          <option value="frontend">Sassandra</option>
+                          <option value="frontend">Mano</option>
+                          <option value="frontend">Zambezi</option>
+                          <option value="frontend">Kagera</option>
+                          <option value="frontend">Tanganyika</option>
+                        </select>
+                    </div>
+                    <div class="formbold-input-group">
+                        <label for="name" class="formbold-form-label"> Room Number </label>
+                        <input
+                          type="number"
+                          name="room_num"
+                          id="room_num"
+                          placeholder="Enter your room number."
+                          class="formbold-form-input"
+                        />
+                    </div>
+                    
+                    <div class="mt-3">
+                        <button class="button btn-navigate-form-step" type="button" step_number="2">Next</button>
+                    </div>
+                </section>
+                <!-- Step 2 Content, default hidden on page load. -->
+                <section id="step-2" class="form-step d-none">
+                    <h2 class="font-normal">Parent details</h2>
+                    <!-- Step 2 input fields -->
+                    <div class="mt-3">
+                        <h3 class="font-normal">Parent 1</h2>
+                        <div class="formbold-input-group">
+                            <label for="name" class="formbold-form-label"> First name </label>
+                            <input
+                              type="text"
+                              name="parent1_first_name"
+                              id="parent1_first_name"
+                              placeholder="Enter parent first name"
+                              class="formbold-form-input"
+                            />
+                        </div>
+                        <div class="formbold-input-group">
+                            <label for="name" class="formbold-form-label"> Last name </label>
+                            <input
+                              type="text"
+                              name="parent1_last_name"
+                              id="parent1_last_name"
+                              placeholder="Enter parent last name"
+                              class="formbold-form-input"
+                            />
+                        </div>
+                        <div class="formbold-input-group">
+                            <label for="name" class="formbold-form-label"> Email </label>
+                            <input
+                              type="email"
+                              name="parent1_email"
+                              id="parent1_email"
+                              placeholder="Enter parent email"
+                              class="formbold-form-input"
+                            />
+                        </div>
+                        <h3 class="font-normal">Parent 2</h2>
+                        <div class="formbold-input-group">
+                            <label for="name" class="formbold-form-label"> First name </label>
+                            <input
+                              type="text"
+                              name="parent2_first_name"
+                              id="parent2_first_name"
+                              placeholder="Enter parent first name"
+                              class="formbold-form-input"
+                            />
+                        </div>
+                        <div class="formbold-input-group">
+                            <label for="name" class="formbold-form-label"> Last name </label>
+                            <input
+                              type="text"
+                              name="parent2_last_name"
+                              id="parent2_last_name"
+                              placeholder="Enter parent last name"
+                              class="formbold-form-input"
+                            />
+                        </div>
+                        <div class="formbold-input-group">
+                            <label for="name" class="formbold-form-label"> Email </label>
+                            <input
+                              type="email"
+                              name="parent2_email"
+                              id="parent1_email"
+                              placeholder="Enter parent email"
+                              class="formbold-form-input"
+                            />
+                        </div>
+                    </div>
+                    <div class="mt-3">
+                        <button class="button btn-navigate-form-step" type="button" step_number="1">Prev</button>
+                        <button class="button btn-navigate-form-step" type="button" step_number="3">Next</button>
+                    </div>
+                </section>
+                <!-- Step 3 Content, default hidden on page load. -->
+                <section id="step-3" class="form-step d-none">
+                    <h2 class="font-normal">Pin Setup</h2>
+                    <!-- Step 3 input fields -->
+                    <p>You will be redirected to another page</p>
+                    
+                    <div class="mt-3">
+                        <button class="button btn-navigate-form-step" type="button" step_number="2">Prev</button>
+                        <button class="button submit-btn" type="submit">Proceed</button>
+                    </div>
+                </section>
+            </form>
+        </div>
+    </div>
+    <script src="{% static 'multi.js' %}"></script>
+    
+</body>
+</html>

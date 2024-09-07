@@ -131,3 +131,7 @@ def pin(request):
 # def signinup(request):
 #     status = "remove"
 #     return render(request, "authentication/signinup.html", {"status":status})
+
+
+def multi(request):
+    return render(request, "authentication/multi.html")
