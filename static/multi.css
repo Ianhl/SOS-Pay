@@ -5,8 +5,10 @@ h2 {
     margin: 0;
 }
 #multi-step-form-container {
-    margin-top: 5rem;
-    margin: 10rem;
+    margin-top: 3rem;
+    margin-left: 10rem;
+    margin-right: 10rem;
+    margin-bottom: 6rem;
 }
 .text-center {
     text-align: center;
@@ -288,4 +290,29 @@ ul.form-stepper li a .form-stepper-circle {
 }
 .formbold-btn:hover {
     box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* img{
+    width: 100px;
+    height: 80px;
+    align-items: center;
+    position: absolute;
+} */
+
+.head {
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.head h2{
+    text-align: center;
+}
+  
+.logo img{
+    width: 170px;
+    height: auto;
+    margin-top: -1.5rem;
 }

@@ -52,7 +52,7 @@ button {
 }
 @media screen and (min-width: 1040px) {
   .container {
-    width: 1040px;
+    width: 1080px;
     margin: 0 auto;
   }
 }
@@ -74,6 +74,11 @@ button {
 .logo h2 {
   font-size: var(--h2-font-size);
   color: var(--primary-color);
+}
+.logo img{
+  width: 130px;
+  height: auto;
+  margin-top: 1rem;
 }
 /* ====  NAV-MENU  ==== */
 .nav_menu_list {
