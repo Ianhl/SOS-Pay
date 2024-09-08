@@ -11,7 +11,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #4070f4;
+  background: #fafbfb;
 }
 :where(.container, form, .input-field, header) {
   display: flex;
@@ -19,6 +19,12 @@ body {
   align-items: center;
   justify-content: center;
 }
+.container img{
+  width: 130px;
+  height: auto;
+  /* margin-top: 1rem; */
+}
+
 .container {
   background: #fff;
   padding: 30px 65px;
@@ -29,10 +35,10 @@ body {
 .container header {
   height: 65px;
   width: 65px;
-  background: #4070f4;
+  /* background: #4070f4; */
   color: #fff;
   font-size: 2.5rem;
-  border-radius: 50%;
+  /* border-radius: 50%; */
 }
 .container h4 {
   font-size: 1.25rem;

@@ -6,6 +6,8 @@ from authentication.models import User
 class Vendor(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     vendor_name = models.CharField(max_length=100)
+    is_active = models.BooleanField(default=False)
+    verified = models.BooleanField(default=False)
     # Add more vendor-related fields here
 
 class Product(models.Model):

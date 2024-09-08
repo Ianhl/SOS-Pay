@@ -30,10 +30,33 @@ class CustomUserManager(UserManager):
 
 
 class User(AbstractBaseUser, PermissionsMixin):
+    year_choices = [
+        ("MYP4", "MYP4"),
+        ("MYP5", "MYP5"),
+        ("DP1", "DP1"),
+        ("DP2", "DP2"),
+    ]
+    hostel_group_choices = [
+        ("Titan", "Titan"),
+        ("Trojan", "Trojan"),
+        ("Viking", "Viking"),
+        ("Spartan", "Spartan"),
+    ]
+    # hostel_choices = [
+    #     ("Tana", "Titan"),
+    #     ("Trojan", "Trojan"),
+    #     ("Viking", "Viking"),
+    #     ("Spartan", "Spartan"),
+    # ]
     email = models.EmailField(blank=True, default='', unique=True)
     first_name = models.CharField(max_length=255, blank=True, default='')
     last_name = models.CharField(max_length=255, blank=True, default='')
-
+    grad_year = models.PositiveSmallIntegerField(blank=True, default=2025, null=True)
+    year_group = models.CharField(max_length=255, default='', choices=year_choices)
+    hostel_group = models.CharField(max_length=255, default='Titan', choices=hostel_group_choices)
+    # hostel = models.CharField(max_length=255, choices=hostel_choices)
+    room_num = models.PositiveSmallIntegerField(blank=True, default=1, null=True)
+    
     is_active = models.BooleanField(default=True)
     is_superuser = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)

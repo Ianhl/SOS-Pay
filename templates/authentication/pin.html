@@ -14,31 +14,31 @@
   </head>
   <body>
     <div class="container">
-        <h2>Welcome to SOS PAY. To proceed, kindly activate your account by creating a pin.</h2>
+        <h2>Create your pin</h2>
       <header>
-        <i class="bx bxs-check-shield"></i>
+        <img id="logo" src="{% static 'sos-pay-high-resolution-logo-transparent.png'%}" alt="logo">
       </header>
       <h4>Enter Account Code</h4>
       <form action="/login/pin" method="post">
         {% csrf_token %}
         <div class="input-field">
-          <input id="p1" name="p1" type="number" />
-          <input id="p2" name="p2" type="number" disabled />
-          <input id="p3" name="p3" type="number" disabled />
-          <input id="p4" name="p4" type="number" disabled />
-          <input id="p5" name="p5" type="number" disabled />
-          <input id="p6" name="p6" type="number" disabled />
+          <input id="p1" name="p1" type="number" required/>
+          <input id="p2" name="p2" type="number" disabled required/>
+          <input id="p3" name="p3" type="number" disabled required/>
+          <input id="p4" name="p4" type="number" disabled required/>
+          <input id="p5" name="p5" type="number" disabled required/>
+          <input id="p6" name="p6" type="number" disabled required/>
         </div>
         <br>
         <h4>Re-Enter Account Code</h4>
         <br>
         <div class="input-field">
-            <input id="2p1" name="2p1" type="number" />
-            <input id="2p2" name="2p2" type="number" disabled />
-            <input id="2p3" name="2p3" type="number" disabled />
-            <input id="2p4" name="2p4" type="number" disabled />
-            <input id="2p5" name="2p5" type="number" disabled />
-            <input id="2p6" name="2p6" type="number" disabled />
+            <input id="2p1" name="2p1" type="number"  required/>
+            <input id="2p2" name="2p2" type="number"  disabled required/>
+            <input id="2p3" name="2p3" type="number"  disabled required/>
+            <input id="2p4" name="2p4" type="number"  disabled required/>
+            <input id="2p5" name="2p5" type="number"  disabled required/>
+            <input id="2p6" name="2p6" type="number"  disabled required/>
         </div>
         <button>Enter</button>
       </form>
