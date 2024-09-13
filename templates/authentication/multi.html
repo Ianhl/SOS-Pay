@@ -47,7 +47,7 @@
                 </li>
             </ul>
             <!-- Step Wise Form Content -->
-            <form id="userAccountSetupForm" name="userAccountSetupForm" enctype="multipart/form-data" method="POST">
+            <form action ="/login/multi" id="userAccountSetupForm" name="userAccountSetupForm" enctype="multipart/form-data" method="POST">
             {% csrf_token %}
                 <!-- Step 1 Content -->
                 <section id="step-1" class="form-step">
@@ -68,11 +68,11 @@
                           What year group are you?
                         </label>
                 
-                        <select class="formbold-form-select" name="occupation" id="occupation">
-                          <option value="Student">MYP4</option>
-                          <option value="designer">MYP5</option>
-                          <option value="fullstack">DP1</option>
-                          <option value="frontend">DP2</option>
+                        <select class="formbold-form-select" name="year_group" id="year_group">
+                          <option value="MYP4">MYP4</option>
+                          <option value="MYP5">MYP5</option>
+                          <option value="DP1">DP1</option>
+                          <option value="DP2">DP2</option>
                         </select>
                     </div>
                     <div class="formbold-input-group">
@@ -80,11 +80,11 @@
                           What hostel group are you?
                         </label>
                 
-                        <select class="formbold-form-select" name="occupation" id="occupation">
-                          <option value="Student">Titan</option>
-                          <option value="designer">Viking</option>
-                          <option value="fullstack">Spartan</option>
-                          <option value="frontend">Trojan</option>
+                        <select class="formbold-form-select" name="hostel_group" id="hostel_group">
+                          <option value="Titan">Titan</option>
+                          <option value="Viking">Viking</option>
+                          <option value="Spartan">Spartan</option>
+                          <option value="Trojan">Trojan</option>
                         </select>
                     </div>
                     <div class="formbold-input-group">
@@ -92,24 +92,24 @@
                           What hostel are you in?
                         </label>
                 
-                        <select class="formbold-form-select" name="occupation" id="occupation">
-                          <option value="Student">Tana</option>
-                          <option value="designer">Kariba</option>
-                          <option value="fullstack">Niger</option>
-                          <option value="frontend">Densu</option>
-                          <option value="frontend">Turkana</option>
-                          <option value="frontend">Cavally</option>
-                          <option value="frontend">Juba</option>
-                          <option value="frontend">Congo</option>
-                          <option value="frontend">Ankobra</option>
-                          <option value="frontend">Volta</option>
-                          <option value="frontend">Limpopo</option>
-                          <option value="frontend">Nile</option>
-                          <option value="frontend">Sassandra</option>
-                          <option value="frontend">Mano</option>
-                          <option value="frontend">Zambezi</option>
-                          <option value="frontend">Kagera</option>
-                          <option value="frontend">Tanganyika</option>
+                        <select class="formbold-form-select" name="hostel" id="hostel">
+                          <option value="Tana">Tana</option>
+                          <option value="Kariba">Kariba</option>
+                          <option value="Niger">Niger</option>
+                          <option value="Densu">Densu</option>
+                          <option value="Turkana">Turkana</option>
+                          <option value="Cavally">Cavally</option>
+                          <option value="Juba">Juba</option>
+                          <option value="Congo">Congo</option>
+                          <option value="Ankobra">Ankobra</option>
+                          <option value="Volta">Volta</option>
+                          <option value="Limpopo">Limpopo</option>
+                          <option value="Nile">Nile</option>
+                          <option value="Sassandra">Sassandra</option>
+                          <option value="Mano">Mano</option>
+                          <option value="Zambezi">Zambezi</option>
+                          <option value="Kagera">Kagera</option>
+                          <option value="Tanganyika">Tanganyika</option>
                         </select>
                     </div>
                     <div class="formbold-input-group">

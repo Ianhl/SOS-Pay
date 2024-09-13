@@ -83,7 +83,7 @@ def signin(request):
             # return render(request, "authentication/index.html", {'fname': fname})
             if user.last_login == None:
                 login(request, user)
-                return redirect('pin')
+                return redirect('multi')
             else:
                 login(request, user)
                 return redirect('main')
@@ -120,7 +120,8 @@ def pin(request):
             messages.error(request, "Pins didn't match")
         user = request.user
         wallet = get_object_or_404(Wallet, user = user)
-        wallet.pin = pin
+        wallet.pin = pin1
+        wallet.save()
         return redirect('main')
         
         
@@ -134,4 +135,37 @@ def pin(request):
 
 
 def multi(request):
+    if request.method == "POST":
+        user = request.user
+        grad_year = request.POST['grad_year']
+        year_group = request.POST['year_group']
+        hostel_group = request.POST['hostel_group']
+        hostel = request.POST['hostel']
+        room_num = request.POST['room_num']
+        parent1_first_name = request.POST['parent1_first_name']
+        parent1_last_name = request.POST['parent1_last_name']
+        parent1_email = request.POST['parent1_email']
+        parent2_first_name = request.POST['parent2_first_name']
+        parent2_last_name = request.POST['parent2_last_name']
+        parent2_email = request.POST['parent2_email']
+        
+        
+        user = request.user
+        user.grad_year = grad_year
+        user.year_group = year_group
+        user.hostel_group = hostel_group
+        user.hostel = hostel
+        user.room_num = room_num
+        user.parent1_first_name = parent1_first_name
+        user.parent1_last_name = parent1_last_name
+        user.parent1_email = parent1_email
+        user.parent2_first_name = parent2_first_name
+        user.parent2_last_name = parent2_last_name
+        user.parent2_email = parent2_email
+        
+        user.save()
+        return redirect('pin')
+        
+        
+        
     return render(request, "authentication/multi.html")

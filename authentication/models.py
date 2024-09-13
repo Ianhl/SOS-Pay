@@ -69,6 +69,12 @@ class User(AbstractBaseUser, PermissionsMixin):
     hostel_group = models.CharField(max_length=255, default='Titan', choices=hostel_group_choices)
     hostel = models.CharField(max_length=255, default='Tana', choices=hostel_choices)
     room_num = models.PositiveSmallIntegerField(blank=True, default=1, null=True)
+    parent1_email = models.EmailField(blank=True, default='')
+    parent1_first_name = models.CharField(max_length=255, blank=True, default='')
+    parent1_last_name = models.CharField(max_length=255, blank=True, default='')
+    parent2_email = models.EmailField(blank=True, default='')
+    parent2_first_name = models.CharField(max_length=255, blank=True, default='')
+    parent2_last_name = models.CharField(max_length=255, blank=True, default='')
     
     is_active = models.BooleanField(default=True)
     is_superuser = models.BooleanField(default=False)
