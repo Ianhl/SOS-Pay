@@ -18,7 +18,8 @@ class Wallet(models.Model):
     balance = models.DecimalField(("balance"), max_digits=100, decimal_places=2, default=0)
     pin = models.IntegerField(default=000000)
     created = models.DateTimeField(default=timezone.now)
-    private_code = models.CharField(max_length=12, unique=True, )
+    private_code = models.CharField(max_length=12, unique=True)
+    is_shopowner = models.BooleanField(default=False)
 
     def save(self, *args, **kwargs):
         if not self.private_code:
@@ -37,9 +38,6 @@ class Wallet(models.Model):
     # def generate_private_code(self):
     #     # Generate a unique private code
     #     return str(uuid.uuid4().hex[:12].upper())  # Example: 8e3a8b4b4c6e
-
-    
-
 
     def deposit(self, value):
     

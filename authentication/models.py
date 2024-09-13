@@ -22,6 +22,18 @@ class CustomUserManager(UserManager):
         extra_fields.setdefault('is_superuser', False)
         return self._create_user(email, password, **extra_fields)
     
+    def create_shopowner(self, email=None, password=None, **extra_fields):
+        extra_fields.setdefault('is_staff', True)
+        extra_fields.setdefault('is_superuser', False)
+        extra_fields.setdefault('vendor_name', '')
+        return self._create_user(email, password, **extra_fields)
+    
+    def create_financeadmin(self, email=None, password=None, **extra_fields):
+        extra_fields.setdefault('is_staff', True)
+        extra_fields.setdefault('is_superuser', False)
+        extra_fields.setdefault('is_financeadmin', True)
+        return self._create_user(email, password, **extra_fields)
+    
     def create_superuser(self, email=None, password=None, **extra_fields):
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
@@ -76,9 +88,11 @@ class User(AbstractBaseUser, PermissionsMixin):
     parent2_first_name = models.CharField(max_length=255, blank=True, default='')
     parent2_last_name = models.CharField(max_length=255, blank=True, default='')
     
-    is_active = models.BooleanField(default=True)
+    is_active = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
+    is_admin = models.BooleanField(default=False)
+    is_financeadmin = models.BooleanField(default=False)
 
     date_joined = models.DateTimeField(default=timezone.now)
     last_login = models.DateTimeField(blank=True, null=True)
@@ -88,6 +102,16 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
+    
+    @property
+    def is_staff(self):
+        "Is the user a member of staff?"
+        return self.staff
+
+    @property
+    def is_admin(self):
+        "Is the user a admin member?"
+        return self.admin
 
 
     class Meta:
@@ -99,3 +123,42 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def get_short_name(self):
         return self.first_name or self.email.split('@')[0]
+    
+    
+    def has_perm(self, perm, obj=None):
+        "Does the user have a specific permission?"
+        # Simplest possible answer: Yes, always
+        return True
+
+    def has_module_perms(self, app_label):
+        "Does the user have permissions to view the app `app_label`?"
+        # Simplest possible answer: Yes, always
+        return True
+    
+    
+    
+    
+class shop_owner(User):
+    user = models.OneToOneField(
+        User, on_delete=models.CASCADE,
+        parent_link=True,
+        related_name='shop_owner',
+    )
+    vendor_name = models.CharField(max_length=256, null=True, blank=True)
+    
+    
+    class Meta:
+        verbose_name = 'Organization'
+        verbose_name_plural = 'Organizations'
+
+class finance_team(User):
+    user = models.OneToOneField(
+        User, on_delete=models.CASCADE,
+        parent_link=True,
+        related_name='finance_team',
+    )
+    name = models.CharField(max_length=256, null=True, blank=True)
+
+    class Meta:
+        verbose_name = 'finance_team'
+        verbose_name_plural = 'finance_teams'

@@ -10,6 +10,8 @@ from django.core.mail import send_mail
 from wallet.models import Wallet
 from django.shortcuts import get_object_or_404, render
 from main.views import main
+from .encryption import decrypt, encrypt
+
 
 
 # wallets are owned by users.
@@ -120,7 +122,7 @@ def pin(request):
             messages.error(request, "Pins didn't match")
         user = request.user
         wallet = get_object_or_404(Wallet, user = user)
-        wallet.pin = pin1
+        wallet.pin = encrypt(pin1)
         wallet.save()
         return redirect('main')
         
@@ -132,7 +134,6 @@ def pin(request):
 # def signinup(request):
 #     status = "remove"
 #     return render(request, "authentication/signinup.html", {"status":status})
-
 
 def multi(request):
     if request.method == "POST":
@@ -163,9 +164,54 @@ def multi(request):
         user.parent2_last_name = parent2_last_name
         user.parent2_email = parent2_email
         
+        user.is_active = True
         user.save()
-        return redirect('pin')
         
-        
+        return redirect('pin')  
         
     return render(request, "authentication/multi.html")
+
+
+
+
+def shop_signup(request):
+    if request.method == "POST":
+        fname = request.POST['fname']
+        lname = request.POST['lname']
+        email = request.POST['email']
+        pass1 = request.POST['pass1']
+        pass2 = request.POST['pass2']
+
+        if User.objects.filter(email=email):
+            messages.error(request, "Email already exists. Try other email")
+            return redirect('home')
+
+        if pass1 != pass2:
+            messages.error(request, "Passwords didn't match")
+
+        myuser = User.objects.create_shopowner(email=email, password=pass1)
+        myuser.first_name = fname
+        myuser.last_name = lname
+
+        myuser.save()
+        Wallet.objects.create(
+            user = myuser,
+            balance = 0,
+            pin = 000000,
+            is_shopowner = True,
+        )
+
+        messages.success(request, "Account successfully created.")
+
+        #Welcome email
+        subject = "Welcome to SOS Pay!"
+        message = "Hello " + myuser.first_name + "!!\n" + "Welcome to SOS Pay\n Thank You for signing up to sell here.\n Your account is currently not verified, hence signin will not be possible. You will be verified within the next 5 days.\n You will recieve an email to activate your account once you are verified. \n If you don't receive this email in the alloted time, kindly send a follow up email. \n\n  Thank you "+fname+ " for choosing SOS Pay!"
+        from_email = 'larteyian@gmail.com'
+        receipient_list = [myuser.email]
+        send_mail(subject, message, from_email, receipient_list, fail_silently=False)
+
+
+
+        return redirect('shop_signin')
+    
+    return render(request, "authentication/signinup.html")
