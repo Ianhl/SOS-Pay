@@ -122,7 +122,7 @@ def pin(request):
             messages.error(request, "Pins didn't match")
         user = request.user
         wallet = get_object_or_404(Wallet, user = user)
-        wallet.pin = encrypt(pin1)
+        wallet.pin = encrypt(str(pin2))
         wallet.save()
         return redirect('main')
         

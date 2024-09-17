@@ -22,17 +22,17 @@ class CustomUserManager(UserManager):
         extra_fields.setdefault('is_superuser', False)
         return self._create_user(email, password, **extra_fields)
     
-    def create_shopowner(self, email=None, password=None, **extra_fields):
-        extra_fields.setdefault('is_staff', True)
-        extra_fields.setdefault('is_superuser', False)
-        extra_fields.setdefault('vendor_name', '')
-        return self._create_user(email, password, **extra_fields)
+    # def create_shopowner(self, email=None, password=None, **extra_fields):
+    #     extra_fields.setdefault('is_staff', True)
+    #     extra_fields.setdefault('is_superuser', False)
+    #     extra_fields.setdefault('vendor_name', '')
+    #     return self._create_user(email, password, **extra_fields)
     
-    def create_financeadmin(self, email=None, password=None, **extra_fields):
-        extra_fields.setdefault('is_staff', True)
-        extra_fields.setdefault('is_superuser', False)
-        extra_fields.setdefault('is_financeadmin', True)
-        return self._create_user(email, password, **extra_fields)
+    # def create_financeadmin(self, email=None, password=None, **extra_fields):
+    #     extra_fields.setdefault('is_staff', True)
+    #     extra_fields.setdefault('is_superuser', False)
+    #     extra_fields.setdefault('is_financeadmin', True)
+    #     return self._create_user(email, password, **extra_fields)
     
     def create_superuser(self, email=None, password=None, **extra_fields):
         extra_fields.setdefault('is_staff', True)
@@ -42,6 +42,59 @@ class CustomUserManager(UserManager):
 
 
 class User(AbstractBaseUser, PermissionsMixin):
+    
+    email = models.EmailField(blank=True, default='', unique=True)
+    first_name = models.CharField(max_length=255, blank=True, default='')
+    last_name = models.CharField(max_length=255, blank=True, default='')
+    
+    is_active = models.BooleanField(default=True)
+    is_superuser = models.BooleanField(default=False)
+    is_staff = models.BooleanField(default=False)
+    is_admin = models.BooleanField(default=False)
+    is_financeadmin = models.BooleanField(default=False)
+
+    date_joined = models.DateTimeField(default=timezone.now)
+    last_login = models.DateTimeField(blank=True, null=True)
+
+
+    objects = CustomUserManager()
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = []
+    
+    # @property
+    # def is_staff(self):
+    #     "Is the user a member of staff?"
+    #     return self.staff
+
+    # @property
+    # def is_admin(self):
+    #     "Is the user a admin member?"
+    #     return self.admin
+
+
+    class Meta:
+        verbose_name = 'User'
+        verbose_name_plural = 'Users'
+
+    def get_full_name(self):
+        return self.first_name 
+
+    def get_short_name(self):
+        return self.first_name or self.email.split('@')[0]
+    
+    
+    # def has_perm(self, perm, obj=None):
+    #     "Does the user have a specific permission?"
+    #     # Simplest possible answer: Yes, always
+    #     return True
+
+    # def has_module_perms(self, app_label):
+    #     "Does the user have permissions to view the app `app_label`?"
+    #     # Simplest possible answer: Yes, always
+    #     return True
+class customer(User):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='customer_profile')
     year_choices = [
         ("MYP4", "MYP4"),
         ("MYP5", "MYP5"),
@@ -73,9 +126,6 @@ class User(AbstractBaseUser, PermissionsMixin):
         ("Kagera", "Kagera"),
         ("Tanganyika", "Tanganyika"),
     ]
-    email = models.EmailField(blank=True, default='', unique=True)
-    first_name = models.CharField(max_length=255, blank=True, default='')
-    last_name = models.CharField(max_length=255, blank=True, default='')
     grad_year = models.PositiveSmallIntegerField(blank=True, default=2025, null=True)
     year_group = models.CharField(max_length=255, default='', choices=year_choices)
     hostel_group = models.CharField(max_length=255, default='Titan', choices=hostel_group_choices)
@@ -88,54 +138,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     parent2_first_name = models.CharField(max_length=255, blank=True, default='')
     parent2_last_name = models.CharField(max_length=255, blank=True, default='')
     
-    is_active = models.BooleanField(default=False)
-    is_superuser = models.BooleanField(default=False)
-    is_staff = models.BooleanField(default=False)
-    is_admin = models.BooleanField(default=False)
-    is_financeadmin = models.BooleanField(default=False)
-
-    date_joined = models.DateTimeField(default=timezone.now)
-    last_login = models.DateTimeField(blank=True, null=True)
-
-
-    objects = CustomUserManager()
-
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = []
     
-    @property
-    def is_staff(self):
-        "Is the user a member of staff?"
-        return self.staff
 
-    @property
-    def is_admin(self):
-        "Is the user a admin member?"
-        return self.admin
-
-
-    class Meta:
-        verbose_name = 'User'
-        verbose_name_plural = 'Users'
-
-    def get_full_name(self):
-        return self.first_name 
-
-    def get_short_name(self):
-        return self.first_name or self.email.split('@')[0]
-    
-    
-    def has_perm(self, perm, obj=None):
-        "Does the user have a specific permission?"
-        # Simplest possible answer: Yes, always
-        return True
-
-    def has_module_perms(self, app_label):
-        "Does the user have permissions to view the app `app_label`?"
-        # Simplest possible answer: Yes, always
-        return True
-    
-    
+ 
     
     
 class shop_owner(User):
@@ -145,6 +150,7 @@ class shop_owner(User):
         related_name='shop_owner',
     )
     vendor_name = models.CharField(max_length=256, null=True, blank=True)
+    # shop = models.OneToOneField()
     
     
     class Meta:
@@ -157,8 +163,8 @@ class finance_team(User):
         parent_link=True,
         related_name='finance_team',
     )
-    name = models.CharField(max_length=256, null=True, blank=True)
 
     class Meta:
         verbose_name = 'finance_team'
-        verbose_name_plural = 'finance_teams'
+        verbose_name_plural = 'finance_teams'                                 
+        

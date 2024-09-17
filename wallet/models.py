@@ -16,7 +16,7 @@ class Wallet(models.Model):
     uid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user = models.OneToOneField(User, on_delete=models.SET_NULL, null=True)
     balance = models.DecimalField(("balance"), max_digits=100, decimal_places=2, default=0)
-    pin = models.IntegerField(default=000000)
+    pin = models.CharField(max_length=12)
     created = models.DateTimeField(default=timezone.now)
     private_code = models.CharField(max_length=12, unique=True)
     is_shopowner = models.BooleanField(default=False)
