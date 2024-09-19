@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from .models import User
+from .models import User,Customer
 from paystackpay import settings
 from django.core.mail import send_mail
 # from django.contrib.auth.models import User
@@ -55,6 +55,10 @@ def signup(request):
             balance = 0,
             pin = 000000,
         )
+        Customer.objects.create(
+            user = myuser,
+        )
+        
 
         messages.success(request, "Account successfully created.")
 
@@ -137,7 +141,8 @@ def pin(request):
 
 def multi(request):
     if request.method == "POST":
-        user = request.user
+        
+        
         grad_year = request.POST['grad_year']
         year_group = request.POST['year_group']
         hostel_group = request.POST['hostel_group']
@@ -152,20 +157,22 @@ def multi(request):
         
         
         user = request.user
-        user.grad_year = grad_year
-        user.year_group = year_group
-        user.hostel_group = hostel_group
-        user.hostel = hostel
-        user.room_num = room_num
-        user.parent1_first_name = parent1_first_name
-        user.parent1_last_name = parent1_last_name
-        user.parent1_email = parent1_email
-        user.parent2_first_name = parent2_first_name
-        user.parent2_last_name = parent2_last_name
-        user.parent2_email = parent2_email
+        customer = get_object_or_404(Customer,user=user)
         
-        user.is_active = True
-        user.save()
+        customer.grad_year = grad_year
+        customer.year_group = year_group
+        customer.hostel_group = hostel_group
+        customer.hostel = hostel
+        customer.room_num = room_num
+        customer.parent1_first_name = parent1_first_name
+        customer.parent1_last_name = parent1_last_name
+        customer.parent1_email = parent1_email
+        customer.parent2_first_name = parent2_first_name
+        customer.parent2_last_name = parent2_last_name
+        customer.parent2_email = parent2_email
+        
+        customer.is_active = True
+        customer.save()
         
         return redirect('pin')  
         
@@ -174,44 +181,45 @@ def multi(request):
 
 
 
-def shop_signup(request):
-    if request.method == "POST":
-        fname = request.POST['fname']
-        lname = request.POST['lname']
-        email = request.POST['email']
-        pass1 = request.POST['pass1']
-        pass2 = request.POST['pass2']
+# def shop_signup(request):
+#     if request.method == "POST":
+#         fname = request.POST['fname']
+#         lname = request.POST['lname']
+#         email = request.POST['email']
+#         pass1 = request.POST['pass1']
+#         pass2 = request.POST['pass2']
 
-        if User.objects.filter(email=email):
-            messages.error(request, "Email already exists. Try other email")
-            return redirect('home')
+#         if User.objects.filter(email=email):
+#             messages.error(request, "Email already exists. Try other email")
+#             return redirect('home')
 
-        if pass1 != pass2:
-            messages.error(request, "Passwords didn't match")
+#         if pass1 != pass2:
+#             messages.error(request, "Passwords didn't match")
 
-        myuser = User.objects.create_shopowner(email=email, password=pass1)
-        myuser.first_name = fname
-        myuser.last_name = lname
+#         myuser = User.objects.create_shopowner(email=email, password=pass1)
+#         myuser.first_name = fname
+#         myuser.last_name = lname
 
-        myuser.save()
-        Wallet.objects.create(
-            user = myuser,
-            balance = 0,
-            pin = 000000,
-            is_shopowner = True,
-        )
+#         myuser.save()
+#         Wallet.objects.create(
+#             user = myuser,
+#             balance = 0,
+#             pin = 000000,
+#             is_shopowner = True,
+#         )
+        
 
-        messages.success(request, "Account successfully created.")
+#         messages.success(request, "Account successfully created.")
 
-        #Welcome email
-        subject = "Welcome to SOS Pay!"
-        message = "Hello " + myuser.first_name + "!!\n" + "Welcome to SOS Pay\n Thank You for signing up to sell here.\n Your account is currently not verified, hence signin will not be possible. You will be verified within the next 5 days.\n You will recieve an email to activate your account once you are verified. \n If you don't receive this email in the alloted time, kindly send a follow up email. \n\n  Thank you "+fname+ " for choosing SOS Pay!"
-        from_email = 'larteyian@gmail.com'
-        receipient_list = [myuser.email]
-        send_mail(subject, message, from_email, receipient_list, fail_silently=False)
+#         #Welcome email
+#         subject = "Welcome to SOS Pay!"
+#         message = "Hello " + myuser.first_name + "!!\n" + "Welcome to SOS Pay\n Thank You for signing up to sell here.\n Your account is currently not verified, hence signin will not be possible. You will be verified within the next 5 days.\n You will recieve an email to activate your account once you are verified. \n If you don't receive this email in the alloted time, kindly send a follow up email. \n\n  Thank you "+fname+ " for choosing SOS Pay!"
+#         from_email = 'larteyian@gmail.com'
+#         receipient_list = [myuser.email]
+#         send_mail(subject, message, from_email, receipient_list, fail_silently=False)
 
 
 
-        return redirect('shop_signin')
+#         return redirect('shop_signin')
     
-    return render(request, "authentication/signinup.html")
+#     return render(request, "authentication/signinup.html")

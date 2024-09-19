@@ -21,21 +21,25 @@ class CustomUserManager(UserManager):
         extra_fields.setdefault('is_staff', False)
         extra_fields.setdefault('is_superuser', False)
         return self._create_user(email, password, **extra_fields)
-    
-    # def create_shopowner(self, email=None, password=None, **extra_fields):
-    #     extra_fields.setdefault('is_staff', True)
-    #     extra_fields.setdefault('is_superuser', False)
-    #     extra_fields.setdefault('vendor_name', '')
-    #     return self._create_user(email, password, **extra_fields)
-    
-    # def create_financeadmin(self, email=None, password=None, **extra_fields):
-    #     extra_fields.setdefault('is_staff', True)
-    #     extra_fields.setdefault('is_superuser', False)
+    # def create_finance_admin(self, email=None, password=None, **extra_fields):
+    #     extra_fields.setdefault('is_staff', False)
     #     extra_fields.setdefault('is_financeadmin', True)
     #     return self._create_user(email, password, **extra_fields)
     
-    def create_superuser(self, email=None, password=None, **extra_fields):
+    def create_shopowner(self, email=None, password=None, **extra_fields):
         extra_fields.setdefault('is_staff', True)
+        extra_fields.setdefault('is_active', False)
+        extra_fields.setdefault('is_superuser', False)
+        return self._create_user(email, password, **extra_fields)
+    
+    def create_financeadmin(self, email=None, password=None, **extra_fields):
+        extra_fields.setdefault('is_staff', False)
+        extra_fields.setdefault('is_superuser', False)
+        extra_fields.setdefault('is_financeadmin', True)
+        return self._create_user(email, password, **extra_fields)
+    
+    def create_superuser(self, email=None, password=None, **extra_fields):
+        extra_fields.setdefault('is_staff', False)
         extra_fields.setdefault('is_superuser', True)
         return self._create_user(email, password, **extra_fields)
     
@@ -93,8 +97,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     #     "Does the user have permissions to view the app `app_label`?"
     #     # Simplest possible answer: Yes, always
     #     return True
-class customer(User):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='customer_profile')
+class Customer(models.Model):
+    user = models.OneToOneField(User,primary_key=True, on_delete=models.CASCADE, related_name='customer_profile', default='', unique=True)
     year_choices = [
         ("MYP4", "MYP4"),
         ("MYP5", "MYP5"),
@@ -137,16 +141,16 @@ class customer(User):
     parent2_email = models.EmailField(blank=True, default='')
     parent2_first_name = models.CharField(max_length=255, blank=True, default='')
     parent2_last_name = models.CharField(max_length=255, blank=True, default='')
-    
+        
     
 
  
     
     
-class shop_owner(User):
+class shop_owner(models.Model):
     user = models.OneToOneField(
         User, on_delete=models.CASCADE,
-        parent_link=True,
+        primary_key=True,
         related_name='shop_owner',
     )
     vendor_name = models.CharField(max_length=256, null=True, blank=True)
@@ -157,10 +161,10 @@ class shop_owner(User):
         verbose_name = 'Organization'
         verbose_name_plural = 'Organizations'
 
-class finance_team(User):
+class finance_team(models.Model):
     user = models.OneToOneField(
         User, on_delete=models.CASCADE,
-        parent_link=True,
+        primary_key=True,
         related_name='finance_team',
     )
 
