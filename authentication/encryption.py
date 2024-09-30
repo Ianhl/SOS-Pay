@@ -4,6 +4,32 @@ letters=["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r"
 enclnum=19
 spacerandom=random.randint(19,36)
 # EorD=input("Do you want to encrypt or dectrypt message?\nE is for encrypt and D for decrypt : ").upper()
+
+Alphabets = [
+    "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o",
+    "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"
+]
+
+def encoder(x):
+    position = 0
+    found = "False"
+    if x == " ":
+        message = x
+    elif x.isdigit():
+        message = x
+    else:
+        while found == "False":
+            if Alphabets[position] == x:
+                found = "True"
+            else:
+                position = position + 1
+            position = position + 1
+            message_location = (position + 13) % 26
+            message_location = message_location - 1
+            message = Alphabets[message_location]
+    return message
+
+
 def Encryption(message):
     codelist=[]
     for i in message:
@@ -104,7 +130,14 @@ def encrypt(input):
     # input=input.replace("?","")
     # message=input.replace("{","")
     encr1=Encryption(input)
-    return encr1
+    final = ""
+    word = encr1
+    word = word.lower()
+    for i in range(0, len(word)):
+        code = word[i]
+        code = encoder(word[i])
+        final = final + code
+    return final
 
 def decrypt(input):
     # input=input.replace(".","")
@@ -120,4 +153,12 @@ def decrypt(input):
     # input=input.replace("?","")
     # messagecode=input.replace("{","")
     decr1=Decryption(input)
-    return decr1
+    final = ""
+    word = decr1
+    word = word.lower()
+    for i in range(0, len(word)):
+        code = word[i]
+        code = encoder(word[i])
+        final = final + code
+    return final
+

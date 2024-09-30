@@ -26,20 +26,20 @@ class CustomUserManager(UserManager):
     #     extra_fields.setdefault('is_financeadmin', True)
     #     return self._create_user(email, password, **extra_fields)
     
-    def create_shopowner(self, email=None, password=None, **extra_fields):
-        extra_fields.setdefault('is_staff', True)
-        extra_fields.setdefault('is_active', False)
-        extra_fields.setdefault('is_superuser', False)
-        return self._create_user(email, password, **extra_fields)
+    # def create_shopowner(self, email=None, password=None, **extra_fields):
+    #     extra_fields.setdefault('is_staff', True)
+    #     extra_fields.setdefault('is_active', False)
+    #     extra_fields.setdefault('is_superuser', False)
+    #     return self._create_user(email, password, **extra_fields)
     
-    def create_financeadmin(self, email=None, password=None, **extra_fields):
-        extra_fields.setdefault('is_staff', False)
-        extra_fields.setdefault('is_superuser', False)
-        extra_fields.setdefault('is_financeadmin', True)
-        return self._create_user(email, password, **extra_fields)
+    # def create_financeadmin(self, email=None, password=None, **extra_fields):
+    #     extra_fields.setdefault('is_staff', False)
+    #     extra_fields.setdefault('is_superuser', False)
+    #     extra_fields.setdefault('is_financeadmin', True)
+    #     return self._create_user(email, password, **extra_fields)
     
     def create_superuser(self, email=None, password=None, **extra_fields):
-        extra_fields.setdefault('is_staff', False)
+        extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
         return self._create_user(email, password, **extra_fields)
     

@@ -20,6 +20,13 @@ class Wallet(models.Model):
     created = models.DateTimeField(default=timezone.now)
     private_code = models.CharField(max_length=12, unique=True)
     is_shopowner = models.BooleanField(default=False)
+    
+    
+    def create_wallet(self, user):
+        wallet = self.model(user=user)
+        
+        user.save(using=self._db)
+
 
     def save(self, *args, **kwargs):
         if not self.private_code:
