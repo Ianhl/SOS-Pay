@@ -66,16 +66,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
     
-    # @property
-    # def is_staff(self):
-    #     "Is the user a member of staff?"
-    #     return self.staff
-
-    # @property
-    # def is_admin(self):
-    #     "Is the user a admin member?"
-    #     return self.admin
-
 
     class Meta:
         verbose_name = 'User'
@@ -87,16 +77,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     def get_short_name(self):
         return self.first_name or self.email.split('@')[0]
     
-    
-    # def has_perm(self, perm, obj=None):
-    #     "Does the user have a specific permission?"
-    #     # Simplest possible answer: Yes, always
-    #     return True
-
-    # def has_module_perms(self, app_label):
-    #     "Does the user have permissions to view the app `app_label`?"
-    #     # Simplest possible answer: Yes, always
-    #     return True
 class Customer(models.Model):
     user = models.OneToOneField(User,primary_key=True, on_delete=models.CASCADE, related_name='customer_profile', default='', unique=True)
     year_choices = [

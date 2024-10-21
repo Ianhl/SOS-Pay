@@ -13,11 +13,7 @@ from django.shortcuts import get_object_or_404, render
 from main.views import main
 from .encryption import decrypt, encrypt
 
-
-
 # wallets are owned by users.
-
-
 
 # User = get_user_model
 
@@ -142,8 +138,6 @@ def pin(request):
 
 def multi(request):
     if request.method == "POST":
-        
-        
         grad_year = request.POST['grad_year']
         year_group = request.POST['year_group']
         hostel_group = request.POST['hostel_group']
@@ -155,7 +149,6 @@ def multi(request):
         parent2_first_name = request.POST['parent2_first_name']
         parent2_last_name = request.POST['parent2_last_name']
         parent2_email = request.POST['parent2_email']
-        
         
         user = request.user
         customer = get_object_or_404(Customer,user=user)

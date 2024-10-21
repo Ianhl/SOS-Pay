@@ -1,15 +1,11 @@
 import random
-# print("Only alphanumeric characters and spaces can be used ! ")
 letters=["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z",'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',"0","1","2","3","4","5","6","7","8","9"," "]
 enclnum=19
 spacerandom=random.randint(19,36)
-# EorD=input("Do you want to encrypt or dectrypt message?\nE is for encrypt and D for decrypt : ").upper()
-
 Alphabets = [
     "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o",
     "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"
 ]
-
 def encoder(x):
     position = 0
     found = "False"
@@ -117,18 +113,6 @@ def Decryption(messagecode):
     
         
 def encrypt(input):
-    # input=input.replace(".","")
-    # input=input.replace(",","")
-    # input=input.replace("}","")
-    # input=input.replace("/","")
-    # input=input.replace('"',"")
-    # input=input.replace("(","")
-    # input=input.replace(")","")
-    # input=input.replace("[","")
-    # input=input.replace("]","")
-    # input=input.replace("!","")
-    # input=input.replace("?","")
-    # message=input.replace("{","")
     encr1=Encryption(input)
     final = ""
     word = encr1
@@ -140,18 +124,6 @@ def encrypt(input):
     return final
 
 def decrypt(input):
-    # input=input.replace(".","")
-    # input=input.replace(",","")
-    # input=input.replace("}","")
-    # input=input.replace("/","")
-    # input=input.replace('"',"")
-    # input=input.replace("(","")
-    # input=input.replace(")","")
-    # input=input.replace("[","")
-    # input=input.replace("]","")
-    # input=input.replace("!","")
-    # input=input.replace("?","")
-    # messagecode=input.replace("{","")
     decr1=Decryption(input)
     final = ""
     word = decr1

@@ -6,5 +6,5 @@ class PaymentForm(forms.ModelForm):
     
     class Meta:
         model = Payment
-        fields = ("amount", "email", "student_email", "receipient_code")
+        fields = ("amount", "email", "receipient_email", "receipient_code")
         

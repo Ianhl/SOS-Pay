@@ -17,7 +17,7 @@ def initiate_payment(request: HttpRequest) -> HttpResponse:
         payment_form = forms.PaymentForm(request.POST)
         if payment_form.is_valid():
             payment = payment_form.save()
-            email = payment.student_email
+            email = payment.receipient_email
             wallet_code = payment.receipient_code
             user = get_object_or_404(User, email=email)
             user_fname = user.first_name

@@ -23,6 +23,7 @@ urlpatterns = [
     path('',include('main.urls')),
     path('wallet/',include('wallet.urls')),
     path('login/', include('authentication.urls')),
-    path('vendor/', include('vendors.urls'))
+    path('vendor/', include('vendors.urls')),
+    path('tuckshop/', include('tuckshop.urls')),
     # path('verify', include('core.urls')),
 ]

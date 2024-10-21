@@ -10,9 +10,9 @@ from django.conf import settings
 class Payment(models.Model):
     amount = models.PositiveBigIntegerField()
     ref = models.CharField(max_length=200)
-    email = models.EmailField(help_text="Please input your email")
-    student_email = models.EmailField(help_text="Please input the receipent/student's email")
-    receipient_code = models.CharField(max_length=20, help_text="Please input the receipent/student's unique wallet code")
+    email = models.EmailField(help_text="Input your email")
+    receipient_email = models.EmailField(help_text="")
+    receipient_code = models.CharField(max_length=20, help_text="Please input the receipient/student's unique wallet code")
     verified = models.BooleanField(default=False)
     date_created = models.DateTimeField(auto_now_add=True)
 
