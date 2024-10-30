@@ -14,6 +14,29 @@ class ImgUploadAPIview(APIView):
         qs_serializer = UploadImageSerializer(
             data={
                 "caption": request.data.get("caption"),
+                "image": request.FILES.get("media"),
                 
-            }
+            },
+            context={"request":request}
         )
+        
+        if qs_serializer.is_valid():
+            qs_serializer.save()
+            return Response(
+                {
+                "message": "Media uploaded successfully",
+                "data": qs_serializer.data,
+            },
+                status=status.HTTP_200_OK,
+            )
+        else:
+            return Response(
+                {"message": qs_serializer.errors, "data":None},
+                status=status.HTTP_400_BAD_REQUEST,
+                
+                
+            )
+    def get(self, request):
+        qs = UploadImageModel.objects.all()
+        qs_serializer = UploadImageSerializer(qs, many=True)
+        return Response(qs_serializer.data, status=status.HTTP_400_BAD_REQUEST)

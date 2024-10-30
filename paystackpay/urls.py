@@ -25,5 +25,6 @@ urlpatterns = [
     path('login/', include('authentication.urls')),
     path('vendor/', include('vendors.urls')),
     path('tuckshop/', include('tuckshop.urls')),
+    path('image/', include("image.urls")),
     # path('verify', include('core.urls')),
 ]

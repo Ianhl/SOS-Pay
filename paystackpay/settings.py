@@ -23,6 +23,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # STATICFILES_DIRS = [BASE_DIR/ "static"]
 
+MEDIA_ROOT =  os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
+
+
+
+
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
@@ -61,6 +67,7 @@ INSTALLED_APPS = [
     'authentication',
     'wallet',
     'vendors',
+    'image',
     # 'encrypted_model_fields',
     # 'authtools',
     # 'authuser',
