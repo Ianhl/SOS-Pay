@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image Uploader</title>
+
+  <link rel="stylesheet" href={% static "image_assets/styles/components/ModalImageUploading.css" %}>
+  <link rel="stylesheet" href={% static "image_assets/styles/components/UploadedImage.css" %}>
+  <link rel="stylesheet" href={% static "image_assets/styles/components/DragAndDrop.css" %}>
+  <link rel="stylesheet" href={% static "image_assets/styles/components/ButtonHover.css" %}>
+  <link rel="stylesheet" href={% static "image_assets/styles/components/Footer.css" %}>
+  <link rel="stylesheet" href={% static "image_assets/styles/components/Button.css" %}>
+  <link rel="stylesheet" href={% static "image_assets/styles/style.css" %}>
+</head>
+<body>
+  
+  <main>
+    <div class="container">
+      <div class="container__image__uploader">
+        <div class="header__image__uploader">
+          <h1>Upload your image</h1>
+          <p>
+            File should be 
+            <strong>.jpeg</strong>,
+            <strong>.jpg</strong>
+            or
+            <strong>.png</strong>
+          </p>
+        </div>
+
+        <form id="form">
+          <div class="drop__image" id="dragAndDrop">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <img id="file" src="./assets/images/svg/photo.svg">
+            <label>Drag & Drop your image here</label>
+          </div>
+
+          <div class="uploader__by__button">
+            <span>Or</span>
+            <div class="input hiddenLabel">
+              <label for="selectFile">Choosen a file</label>
+              <input type="file" id="selectFile" class="button__hover">
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div class="uploaded__image none">
+        <div class="header">
+
+          <div class="success">
+            <img src="./assets/images/svg/check.svg" alt="Upload done" />
+            <h2>Uploaded Successfully!</h2>
+          </div>
+
+          <div class="warning hidden">
+            <img src="./assets/images/svg/warning.svg" alt="Error upload." />
+            <h2>Error Upload!</h2>
+          </div>
+        </div>
+
+        <div class="container__preview__image">
+          <img src="#" alt="Your Image" id="addedImage" class="">
+          <div class="warning hidden">
+            <h3>This file extension not allowed!</h3>
+            <small>Try .jpeg, .jpg or .png</small>
+          </div>
+        </div>
+
+        <div class="copy__link__image">
+          <p id="imageLink">https://images.yourdomain.com/photo2dsa-dad32432-423-42124214124</p>
+          <button type="button" id="copyLink" class="button__hover">copy link</button>
+        </div>
+
+        <div class="back_upload hidden">
+          <button type="button" id="button__back" class="button button__hover">
+            back
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="container__modal__uploading none">
+
+      <div class="modal__image__uploading">
+        <h3>Uploading...</h3>
+        <input type="range" name="" id="">
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <small>
+      devoloped by
+      <span>Matheus Todao</span>
+    </small>
+  </footer>
+
+  <script src={% "image_assets/scripts/globalVariables.js" %}></script>
+  <script src={% "image_assets/scripts/Utils/Delay.js" %}></script>
+  <script src={% "image_assets/scripts/Components/ImageUploader/Components/ChangeClassToShowOrHidden.js" %}></script>
+  <script src={% "image_assets/scripts/Components/ImageUploader/Utils/validateMimesTypeImage.js" %}></script>
+  <script src={% "image_assets/scripts/Components/ImageUploader/index.js" %}></script>
+  <script src={% "image_assets/scripts/main.js" %}></script>
+</body>
+</html>
