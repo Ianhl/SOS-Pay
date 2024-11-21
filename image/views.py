@@ -37,6 +37,7 @@ class ImgUploadAPIview(APIView):
                 
             )
     def get(self, request):
-        qs = UploadImageModel.objects.all()
-        qs_serializer = UploadImageSerializer(qs, many=True)
-        return Response(qs_serializer.data, status=status.HTTP_400_BAD_REQUEST)
+        # qs = UploadImageModel.objects.all()
+        # qs_serializer = UploadImageSerializer(qs, many=True)
+        # return Response(qs_serializer.data, status=status.HTTP_400_BAD_REQUEST)
+        return render(request, 'image/index.html')
