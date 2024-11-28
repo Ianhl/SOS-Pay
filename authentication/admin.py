@@ -2,7 +2,7 @@ from django.contrib import admin
 
 # from django.contrib.auth.admin import UserAdmin
 # Register your models here.
-from .models import User, shop_owner, Customer, finance_team
+from .models import User, shop_owner, Customer, finance_team, tuckshop
 
 @admin.register(User)
 class CustomUserAdmin(admin.ModelAdmin):
@@ -17,5 +17,10 @@ class CustomerProfileAdmin(admin.ModelAdmin):
     list_display = ('user', 'grad_year', 'year_group', 'hostel_group',)
 
 @admin.register(finance_team)
+class AdminProfileAdmin(admin.ModelAdmin):
+    list_display = ('user',)
+    
+
+@admin.register(tuckshop)
 class AdminProfileAdmin(admin.ModelAdmin):
     list_display = ('user',)

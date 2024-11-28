@@ -100,3 +100,4 @@ class Transaction(models.Model):
     # The date/time of the creation of this transaction.
     uid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     created_at = models.DateTimeField(auto_now_add=True)
+    email_otp = models.CharField(max_length=6, null=True, blank=True)

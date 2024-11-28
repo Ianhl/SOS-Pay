@@ -33,7 +33,7 @@ def signup(request):
 
         if User.objects.filter(email=email):
             messages.error(request, "Email already exists. Try other email")
-            return redirect('home')
+            return redirect('main')
 
         if pass1 != pass2:
             messages.error(request, "Passwords didn't match")

@@ -134,12 +134,21 @@ class shop_owner(models.Model):
         related_name='shop_owner',
     )
     vendor_name = models.CharField(max_length=256, null=True, blank=True)
-    # shop = models.OneToOneField()
-    
-    
+    # shop = models.OneToOneField()  
     class Meta:
         verbose_name = 'Organization'
         verbose_name_plural = 'Organizations'
+class tuckshop(models.Model):
+    user = models.OneToOneField(
+        User, on_delete=models.CASCADE,
+        primary_key=True,
+        related_name='tuckshop_owner',
+    )
+    owner_name = models.CharField(max_length=256, null=True, blank=True)
+    # shop = models.OneToOneField()  
+    class Meta:
+        verbose_name = 'Tuckshop'
+        verbose_name_plural = 'Tuckshop'
 
 class finance_team(models.Model):
     user = models.OneToOneField(

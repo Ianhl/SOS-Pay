@@ -5,10 +5,12 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <title>SOS PAY Wallet</title>
 
     <!-- ==== STYLE.CSS ==== -->
     <link rel="stylesheet" href="{% static 'style2.css' %}" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 
     <!-- ====  REMIXICON CDN ==== -->
     <link
@@ -75,7 +77,9 @@
                     Hello <span>{{ fname }}</span>
                     <br>
                     <br>
-                    Your balance is: GHC <b>{{ balance }}</b>
+                    Balance: GHC <div id="balance"> 
+                      <span id="balanceValue">•••••</span>
+                      <i id="toggleIcon" class="fas fa-eye"></i>
                 {% else %}
                     Hello <span> User</span>
                     <br>
@@ -87,11 +91,23 @@
               <a href="/pay"><button class="btn view_more_btn">
                 Add funds <i class="ri-arrow-right-line"></i>
               </button></a>
+              <a href="/pay"><button class="btn view_more_btn">
+                Request for funds <i class="ri-arrow-right-line"></i>
+              </button></a>
+            <br>
+            <br> 
           </div>
-          <div class="grid-item-2">
-            <div class="team_img_wrapper">
-              <img src="{% static 'team.svg' %}" alt="team-img" />
-            </div>
+          <div>
+            <br>
+            <br>
+            <p>
+              {% if user.is_authenticated %}
+                    Wallet code:<div id="wallet_code"> 
+                      <span id="WalletValue">•••••</span>
+                      <i id="toggleIcon2" class="fas fa-eye"></i>
+
+              {% endif %}
+                    </p>
           </div>
         </div>
       </div>
@@ -116,7 +132,9 @@
                 />
               </svg>
             </div>
+            
             <div class="featured_info">
+              
               <span class="title">Built for developers </span>
               <p>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore
@@ -190,6 +208,48 @@
         ToggleBtnId = document.getElementById("toggle_btn"),
         CloseBtnId = document.getElementById("close_btn");
 
+        document.addEventListener("DOMContentLoaded", () => {
+          const balanceValue = document.getElementById("balanceValue");
+          const toggleIcon = document.getElementById("toggleIcon");
+
+          let isVisible = false;
+
+          toggleIcon.addEventListener("click", () => {
+              if (isVisible) {
+                  balanceValue.textContent = "•••••";
+                  toggleIcon.classList.remove("fa-eye");
+                  toggleIcon.classList.add("fa-eye-slash");
+              } else {
+                  balanceValue.textContent = "{{ balance }}"; // Replace with actual balance dynamically
+                  toggleIcon.classList.remove("fa-eye-slash");
+                  toggleIcon.classList.add("fa-eye");
+              }
+              isVisible = !isVisible;
+          
+          });
+        });
+        document.addEventListener("DOMContentLoaded", () => {
+          const WalletValue = document.getElementById("WalletValue");
+          const toggleIcon2 = document.getElementById("toggleIcon2");
+
+          let isVisible2 = false;
+
+          toggleIcon2.addEventListener("click", () => {
+              if (isVisible2) {
+                  WalletValue.textContent = "•••••";
+                  toggleIcon2.classList.remove("fa-eye");
+                  toggleIcon2.classList.add("fa-eye-slash");
+              } else {
+                  WalletValue.textContent = "{{ private_code }}"; // Replace with actual balance dynamically
+                  toggleIcon2.classList.remove("fa-eye-slash");
+                  toggleIcon2.classList.add("fa-eye");
+              }
+              isVisible2 = !isVisible2;
+          
+          });
+        });
+
+
         // ==== SHOW MENU ==== //
         ToggleBtnId.addEventListener("click", () => {
         navId.classList.add("show");
@@ -200,6 +260,7 @@
         navId.classList.remove("show");
         });
 
+        
         // ==== Animate on Scroll Initialize  ==== //
         AOS.init();
 

@@ -9,7 +9,8 @@ def wallet(request):
         fname = user.first_name
         wallet = get_object_or_404(Wallet, user = user)
         balance = wallet.balance
-        return render(request, "main/wallet.html" , {'fname':fname, 'balance':balance})
+        private_code = wallet.private_code
+        return render(request, "main/wallet.html" , {'fname':fname, 'balance':balance, 'private_code':private_code})
     else: 
         return render(request, "main/wallet.html")
 

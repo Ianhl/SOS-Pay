@@ -13,6 +13,21 @@
   box-sizing: border-box;
 }
 
+#balance {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 40px;
+}
+#toggleIcon {
+  cursor: pointer;
+  font-size: 16px;
+  color: black;
+}
+#toggleIcon:hover {
+  color: gray;
+}
+
 /* ==== CSS VARIABLES ==== */
 :root {
   --primary-color: #335eea;
