@@ -68,6 +68,7 @@ INSTALLED_APPS = [
     'wallet',
     'vendors',
     'image',
+    'tuckshop',
     # 'encrypted_model_fields',
     # 'authtools',
     # 'authuser',

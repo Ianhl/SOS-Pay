@@ -1,0 +1,48 @@
+{% load static%}
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tuckshop Product Registration</title>
+
+    <!--Stylesheet-->
+    <link rel="stylesheet" href={% static "tuck_assets/style2.css" %}>
+</head>
+<body>
+    <div class="registration-container">
+        <div class="registration-header">
+            <h2>Registration</h2>
+            <span class="divider"></span>
+        </div>
+        <div class="registration-body">
+            <form action="/tuckshop/register" method="post">
+                {% csrf_token %}
+                <div class="registration-box">
+                    <div class="input-box">
+                        <label for="">Product Name</label>
+                        <input type="text" class="input-field" id ="product_name" name = "product_name" placeholder="Enter Product Name" required>
+                    </div>
+                    <div class="input-box">
+                        <label for="">Product Category</label>                  
+                        <select class="formbold-form-select" name="product_category" id="product_category" required>
+                        <option value="Drink">Drink</option>
+                        <option value="Chips">Chips</option>
+                        <option value="Candy">Candy</option>
+                        <option value="Cookies">Cookies</option>
+                        </select>
+                    </div>
+                    <div class="input-box">
+                        <label for="">Product Price</label>
+                        <input type="number" class="input-field" id="price" name="price" placeholder="Enter Price" required>
+                    </div>
+                    
+                </div>
+                <button class="btn-register" type="submit">Register Product</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

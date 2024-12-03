@@ -8,13 +8,16 @@ document.addEventListener("DOMContentLoaded", () => {
     const previewContainer = document.getElementById("previewContainer");
     const previewImage = document.getElementById("previewImage");
     const captionPreview = document.getElementById("captionPreview");
+    
 
     form.addEventListener("submit", async (e) => {
         e.preventDefault();
         statusMessage.textContent = "";
         statusMessage.className = "hidden";
 
-        const caption = captionInput.value;
+        const urlParams = new URLSearchParams(window.location.search);
+
+        const productId = urlParams.get("product_id");
         const imageFile = imageInput.files[0];
 
         if (!imageFile) {
@@ -23,11 +26,11 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         const formData = new FormData();
-        formData.append("caption", caption);
+        formData.append("product_id", productId);
         formData.append("media", imageFile);
 
         try {
-            const response = await fetch("/image/media_upload", {
+            const response = await fetch("/tuckshop/media_upload", {
                 method: "POST",
                 body: formData,
             });
