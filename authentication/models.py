@@ -1,3 +1,5 @@
+import random
+import string
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, UserManager
@@ -122,7 +124,7 @@ class Customer(models.Model):
     parent2_first_name = models.CharField(max_length=255, blank=True, default='')
     parent2_last_name = models.CharField(max_length=255, blank=True, default='')
     student_code = models.CharField(max_length=7, blank=True, default='', unique='True')
-    def generate_private_code(self):
+    def generate_student_code(self):
         length = 4
         characters =  string.digits
         while True:
@@ -130,8 +132,8 @@ class Customer(models.Model):
             lname= self.user.last_name
             lname = lname.upper()
             lname = lname[0:3]
-            code = f'{lname} {code}'
-            if not Wallet.objects.filter(private_code=code).exists():
+            code = f'{lname}{code}'
+            if not Customer.objects.filter(student_code=code).exists():
                 return code    
 
     def __str__(self):

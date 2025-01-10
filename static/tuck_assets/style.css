@@ -251,9 +251,11 @@ header {
 }
 
 .product-img {
-    width: 100%;
+    width: auto;
     height: auto;
+    max-height: 200px;
     margin-bottom: 0.5rem;
+    align-items: center;
 }
 
 .product-title {

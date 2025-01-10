@@ -11,7 +11,7 @@ from django.core.mail import send_mail
 from wallet.models import Wallet
 from django.shortcuts import get_object_or_404, render
 from main.views import main
-from .encryption import decrypt, encrypt
+from wallet.encryption import decrypt, encrypt
 
 # wallets are owned by users.
 
@@ -164,6 +164,7 @@ def multi(request):
         customer.parent2_first_name = parent2_first_name
         customer.parent2_last_name = parent2_last_name
         customer.parent2_email = parent2_email
+        customer.student_code = customer.generate_student_code()
         
         customer.is_active = True
         customer.save()

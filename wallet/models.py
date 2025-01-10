@@ -16,9 +16,9 @@ class Wallet(models.Model):
     uid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user = models.OneToOneField(User, on_delete=models.SET_NULL, null=True)
     balance = models.DecimalField(("balance"), max_digits=100, decimal_places=2, default=0)
-    pin = models.CharField(max_length=12)
+    pin = models.CharField(max_length=20)
     created = models.DateTimeField(default=timezone.now)
-    private_code = models.CharField(max_length=12, unique=True)
+    private_code = models.CharField(max_length=20, unique=True)
     is_shopowner = models.BooleanField(default=False)
     
     
@@ -69,7 +69,7 @@ class Wallet(models.Model):
         that it automatically rolls-back during a
         transaction lifecycle.
         """
-        if value > self.current_balance:
+        if int(value) > int(self.balance):
             raise InsufficientBalance('This wallet has insufficient balance.')
 
         self.transaction_set.create(

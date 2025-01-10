@@ -11,7 +11,7 @@ urlpatterns = [
     path('register', views.tuckshop_register, name="tuckshop_register"),
     path('view', views.product_list, name="product_list"),
     path('save-order/', views.save_order, name='save_order'),
-    path('checkout/', views.checkout, name='checkout'),
+    path('checkout/<int:order_id>/', views.checkout, name='checkout'),
     path('order-confirmation/<int:order_id>/', views.order_confirmation, name='order_confirmation'),
     
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

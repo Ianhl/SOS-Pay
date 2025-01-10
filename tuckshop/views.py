@@ -1,5 +1,11 @@
-from django.shortcuts import redirect, render
+
+from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
+from django.contrib import messages
+from authentication.models import Customer
+from wallet.encryption import decrypt
+from wallet.models import Wallet
+from wallet.num2words import convert_num
 from .decorator import user_is_tuckshop_owner
 from rest_framework.response import Response
 from .serializers import ProductImageSerializer
@@ -10,6 +16,7 @@ from urllib.parse import urlencode
 from django.http import JsonResponse
 from .models import Product, Order, OrderItem
 import json
+from django.core.mail import send_mail
 # Create your views here.
 
 @user_is_tuckshop_owner
@@ -155,8 +162,67 @@ def save_order(request):
 def order_confirmation(request, order_id):
     order = Order.objects.get(id=order_id)
     products = Product.objects.all()
+    if request.method == "POST":
+        amount_due = order.get_total_price()
+        pin = request.POST['custom-username']
+        fname = request.POST['fname']
+        lname = request.POST['lname']
+        student_code = request.POST['student_code']
+        student = get_object_or_404(Customer, student_code=student_code)
+        user = student.user
+        wallet = get_object_or_404(Wallet, user = user)
+        tuck_wallet = get_object_or_404(Wallet, private_code= "TUCK123456")
+        wallet_pin = decrypt(wallet.pin)
+        user_fname = user.first_name
+        user_lname = user.last_name
+        if fname == user_fname and lname == user_lname: 
+            if pin == wallet_pin:
+                wallet.transfer(wallet=tuck_wallet, value=amount_due)
+                messages.success(request, "Payment successful")
+                subject = "Payment made to tuckshop!"
+                amount_in_words = convert_num(amount_due)
+                amount_str = str(amount_due)
+                message = "Hello " + user.first_name + " ""!!\n" + "Thank You for using SOS Pay.\n You made a purchase of " + amount_in_words + ", "+amount_str ;" Your wallet has been debited \n The products purchased were... \n\n Thank you for using SOS Pay \n If this was not you, contact us now at hgicpay@gmail.com "
+                from_email = 'larteyian@gmail.com'
+                receipient_list = [user.email]
+                send_mail(subject, message, from_email, receipient_list, fail_silently=False)
+                return redirect ('product_list')
+            
+
+            else:
+                messages.error(request, "Payment Unsuccessful")
+    
+
     return render(request, 'tuckshop/checkout.html', {'order': order, 'products':products,})
 
 
-def checkout(request):
+def checkout(request, order_id):
+    if request.method == "POST":
+        order = get_object_or_404(Order, order_id= order_id)
+        amount_due = order.get_total_price
+        pin = request.POST['custom-username']
+        fname = request.POST['fname']
+        lname = request.POST['lname']
+        student_code = request.POST['student_code']
+        student = get_object_or_404(Customer, student_code=student_code)
+        user = student.user
+        wallet = get_object_or_404(Wallet, user = user)
+        tuck_wallet = get_object_or_404(Wallet, private_code= "TUCK123456")
+        wallet_pin = decrypt(wallet.pin)
+        user_fname = user.first_name
+        user_lname = user.last_name
+        if fname == user_fname and lname == user_lname: 
+            if pin == wallet_pin:
+                wallet.transfer(wallet=tuck_wallet, value=amount_due)
+                messages.success(request, "Payment successful")
+                subject = "Payment made to tuckshop!"
+                message = "Hello " + user.first_name + " ""!!\n" + "Thank You for using SOS Pay.\n You made a purchase of " + amount_due + "and your wallet has been debited \n The products purchased were... \n\n Thank you for using SOS Pay \n If this was not you, contact us now at hgicpay@gmail.com "
+                from_email = 'larteyian@gmail.com'
+                receipient_list = [user.email]
+                send_mail(subject, message, from_email, receipient_list, fail_silently=False)
+                return redirect ('product_list')
+            
+
+            else:
+                messages.error(request, "Payment Unsuccessful")
     return render(request, 'tuckshop/checkout.html')

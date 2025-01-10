@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token }}">
     <title>Order Confirmation</title>
     <link rel="stylesheet" href="{% static 'tuck_assets/style3.css' %}">
 </head>
@@ -30,7 +31,7 @@
                     </tr>
                     <tr>
                         <td>
-                        <div class='price'>GHC {{ item.get_total_price }}</div>
+                        <div class='price' name='price' id="price">GHC {{ item.get_total_price }}</div>
                         </td>
                     </tr>
                     </tbody>
@@ -49,34 +50,39 @@
             </span>
             <span style='float:right; text-align:right;'>
               <div class='thin dense'>GHC 0</div>
-              GHC {{ order.get_total_price }}
+              GHC <div name="total_price" id="total_price">{{ order.get_total_price }}</div>
             </span>
           </div>
   </div>
   </div>
+        
           <div class='credit-info'>
             <div class='credit-info-content'>
-              <img src="{% static 'credit_card_illustration-removebg-preview.png' %}" height='80' class='credit-card-image' id='credit-card-image'></img>
-              Card Number
-              <input class='input-field'></input>
-              Card Holder
-              <input class='input-field'></input>
-              <table class='half-input-table'>
-                <tr>
-                  <td> Expires
-                    <input class='input-field'></input>
-                  </td>
-                  <td>CVC
-                    <input class='input-field'></input>
-                  </td>
-                </tr>
-              </table>
-              <button class='pay-btn'>Checkout</button>
+              <form autocomplete="off" method="post" action="/tuckshop/order-confirmation/{{ order.id }}/">
+                {% csrf_token %}
+                <img src="{% static 'credit_card_illustration-removebg-preview.png' %}" height='80' class='credit-card-image' id='credit-card-image'></img>
+                First Name
+                <input class='input-field' id='fname' name='fname' required></input>
+                Last Name
+                <input class='input-field' id='lname' name='lname'></input>
+                <table class='half-input-table'>
+                  <tr>
+                    <td> Student Code
+                      <input class='input-field' autocomplete="off" name="student_code" type="text" id='student_code'></input>
+                    </td>
+                    <td>Pin
+                      <input class='input-field' autocomplete="new-password" name="custom-username" type="password"></input>
+                    </td>
+                  </tr>
+                </table>
+                <button class='pay-btn' type="submit">Checkout</button>
+             </form>
   
             </div>
   
           </div>
-        </div>
+          </div>
+         
   </div>
   
 </body>
