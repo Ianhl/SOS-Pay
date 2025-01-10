@@ -1,0 +1,83 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmation</title>
+    <link rel="stylesheet" href="{% static 'tuck_assets/style3.css' %}">
+</head>
+<body>
+    <div class='container'>
+    <div class='window'>
+      <div class='order-info'>
+        <div class='order-info-content'>
+          <h2>Order Summary</h2>
+                <div class='line'></div>
+            {% for item in order.items.all %}
+                <table class='order-table'>
+                    <tbody>
+                    <tr>
+                        <td><img src="{{ item.product.image.url}}" alt="{{ item.product.product_name }}" class='full-width'></img>
+                        </td>
+                        <td>
+                        <br> <span class='thin'>{{ item.product.product_name }}</span>
+                        <br><span class='thin small'> {{ item.product.product_category }}</span>
+                        <br><span class='thin small'>Unit Price: {{ item.product.price }} x {{ item.quantity }}</span>
+                        
+                        </td>
+        
+                    </tr>
+                    <tr>
+                        <td>
+                        <div class='price'>GHC {{ item.get_total_price }}</div>
+                        </td>
+                    </tr>
+                    </tbody>
+        
+                </table>
+                <div class='line'></div>
+            {% empty %}
+                <p>No products available.</p>
+
+            {% endfor %}
+          
+          <div class='total'>
+            <span style='float:left;'>
+              <div class='thin dense'>Coupon</div>
+              TOTAL
+            </span>
+            <span style='float:right; text-align:right;'>
+              <div class='thin dense'>GHC 0</div>
+              GHC {{ order.get_total_price }}
+            </span>
+          </div>
+  </div>
+  </div>
+          <div class='credit-info'>
+            <div class='credit-info-content'>
+              <img src="{% static 'credit_card_illustration-removebg-preview.png' %}" height='80' class='credit-card-image' id='credit-card-image'></img>
+              Card Number
+              <input class='input-field'></input>
+              Card Holder
+              <input class='input-field'></input>
+              <table class='half-input-table'>
+                <tr>
+                  <td> Expires
+                    <input class='input-field'></input>
+                  </td>
+                  <td>CVC
+                    <input class='input-field'></input>
+                  </td>
+                </tr>
+              </table>
+              <button class='pay-btn'>Checkout</button>
+  
+            </div>
+  
+          </div>
+        </div>
+  </div>
+  
+</body>
+</html>

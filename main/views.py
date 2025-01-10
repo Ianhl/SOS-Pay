@@ -15,7 +15,7 @@ def main(request):
 def greet(time):
     if time in range(1,11):
         greeting = "Good Morning,"
-    elif time in range(12,18):
+    elif time in range(11,19):
         greeting = "Good Afternoon,"
     else: 
         greeting = "Good Evening,"

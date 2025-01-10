@@ -7,6 +7,9 @@ from rest_framework import status
 from .models import Product
 from rest_framework.views import APIView
 from urllib.parse import urlencode
+from django.http import JsonResponse
+from .models import Product, Order, OrderItem
+import json
 # Create your views here.
 
 @user_is_tuckshop_owner
@@ -111,3 +114,49 @@ class ImgUploadAPIview(APIView):
         product_id = request.GET.get('product_id')
         context = {"product_id": product_id}
         return render(request, 'image/index.html')
+    
+def save_order(request):
+    if request.method == "POST":
+        try:
+            # Parse the incoming JSON data
+            order_data = json.loads(request.body)
+
+            # Output the parsed data to the server console
+            print("Order Data Received:", order_data)
+
+            # Create a new Order
+            order = Order.objects.create()
+
+            for item in order_data['items']:
+                try:
+                    product = Product.objects.get(product_id=item['product_id'])
+                    OrderItem.objects.create(
+                        order=order,
+                        product=product,
+                        quantity=item['quantity']
+                    )
+                except Product.DoesNotExist:
+                    return JsonResponse({'message': f"Product with ID {item['product_id']} not found"}, status=404)
+                except Exception as e:
+                    print(f"Error creating OrderItem: {str(e)}")
+                    return JsonResponse({'message': f'Error creating OrderItem: {str(e)}'}, status=500)
+
+            return JsonResponse({'message': 'Order saved successfully', 'order_id': order.id})
+
+        except json.JSONDecodeError:
+            return JsonResponse({'message': 'Invalid JSON data'}, status=400)
+        except Exception as e:
+            print(f"Error processing order: {str(e)}")
+            return JsonResponse({'message': f'Error processing order: {str(e)}'}, status=500)
+
+    else:
+        return JsonResponse({'message': 'Invalid request method'}, status=400)
+
+def order_confirmation(request, order_id):
+    order = Order.objects.get(id=order_id)
+    products = Product.objects.all()
+    return render(request, 'tuckshop/checkout.html', {'order': order, 'products':products,})
+
+
+def checkout(request):
+    return render(request, 'tuckshop/checkout.html')

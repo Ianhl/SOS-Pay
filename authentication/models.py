@@ -121,7 +121,22 @@ class Customer(models.Model):
     parent2_email = models.EmailField(blank=True, default='')
     parent2_first_name = models.CharField(max_length=255, blank=True, default='')
     parent2_last_name = models.CharField(max_length=255, blank=True, default='')
-        
+    student_code = models.CharField(max_length=7, blank=True, default='', unique='True')
+    def generate_private_code(self):
+        length = 4
+        characters =  string.digits
+        while True:
+            code = ''.join(random.choice(characters) for _ in range(length))
+            lname= self.user.last_name
+            lname = lname.upper()
+            lname = lname[0:3]
+            code = f'{lname} {code}'
+            if not Wallet.objects.filter(private_code=code).exists():
+                return code    
+
+    def __str__(self):
+        return self.user.first_name
+
     
 
  

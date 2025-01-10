@@ -3,7 +3,7 @@
 :root{
     --primary-color: #F8F7FC;
     --secondary-color: #231E1E;
-    --accent-color: #FC8C1B;
+    --accent-color: #1b5bfcea;
 }
 
 *{
@@ -27,7 +27,7 @@ body{
     padding: 15px 25px;
     width: 640px;
     border-radius: 12px;
-    box-shadow: 10px 14px 90px #F5AC6252;
+    box-shadow: 10px 14px 90px #4337ef52;
 }
 
 .registration-container .registration-header{
@@ -50,24 +50,26 @@ body{
 .registration-body .registration-box{
     position: relative;
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-around;
+    flex-direction: column; 
+    gap: 15px; 
+    align-items: flex-start; /* Align items to the left */
+    width: 100%; /* Ensure the box spans full width */
     padding: 10px 0px;
+    
 }
 
 .registration-box .input-box{
     position: relative;
-    width: 50%;
-    justify-content: space-around;
-    padding: 5px 10px;
-    display: block;
+    width: 100%; /* Full width for each input section */
 }
 .registration-box .input-box label{
     font-size: 14px;
+    display: block; /* Place label above the input field */
+    margin-bottom: 5px; /* Space between label and input field */
     color: var(--secondary-color);
 }
 
+.registration-box .formbold-form-select,
 .registration-box .input-field{
     width: 100%;
     height: 36px;
@@ -104,6 +106,38 @@ body{
     visibility: hidden;
 }
 
+.registration-box .formbold-form-select {
+    width: 100%; /* Full width */
+    height: 36px; /* Match the height of other inputs */
+    border-radius: 4px; /* Rounded corners */
+    border: 1px solid #1B1B1B46; /* Light border */
+    padding: 0 8px; /* Padding inside the dropdown */
+    background-color: #fff; /* White background */
+    font-size: 14px; /* Font size */
+    color: #333; /* Text color */
+    cursor: pointer; /* Pointer cursor */
+    appearance: none; /* Remove native dropdown styling */
+    -webkit-appearance: none; /* Safari compatibility */
+    -moz-appearance: none; /* Firefox compatibility */
+    background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24"><path fill="%23333" d="M7 10l5 5 5-5z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 8px center; /* Position of the dropdown arrow */
+    background-size: 12px; /* Size of the dropdown arrow */
+}
+
+.registration-box .formbold-form-select:focus {
+    outline: none; /* Remove default outline */
+    border: solid var(--accent-color); /* Highlight border on focus */
+    border-width: 1px 1px 3px 1px; /* Accent border effect */
+    background-color: #f9f9f9; /* Slightly different background on focus */
+}
+
+.registration-box .formbold-form-select option {
+    font-size: 14px; /* Option text size */
+    color: #333; /* Option text color */
+    background-color: #fff; /* Option background */
+}
+
 .registration-body .btn-register{
     border: 0;
     background: var(--accent-color);
@@ -112,7 +146,7 @@ body{
     font-size: 16px;
     padding: 10px 25px;
     border-radius: 4px;
-    box-shadow: 0px 4px 12px #F5AC6280;
+    box-shadow: 0px 4px 12px #6e62f567;
     margin: 0px 10px;
     cursor: pointer;
 }
@@ -140,7 +174,7 @@ body{
 }
 
 .registration-footer a:hover{
-    border-bottom: 2px solid #FC8C1B;
+    border-bottom: 2px solid #1b62fc;
 } 
 
 

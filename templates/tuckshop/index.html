@@ -5,18 +5,23 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Simple online store</title>
+        <title>Tuck shop</title>
         <link rel="stylesheet" href={% static "tuck_assets/style.css"%}>
+        <meta name="csrf-token" content="{{ csrf_token }}">
         <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css">
     </head>
 
     <body>
         <header>
             <div class="nav container">
-                <a href="#" class="logo">Online Store</a>
+                <div class="logo">
+                    <a href="/"><img id="logo" src="{% static 'sos-pay-high-resolution-logo-transparent.png'%}" alt="logo"></a>
+                </div>
+                
+                <a href="#" class="logo">Tuck Shop</a>
                 <i class="bx bx-shopping-bag" id="cart-icon"></i>
                 <div class="cart">
-                    <h2 class="cart-title">Your Cart</h2>
+                    <h2 class="cart-title">Cart</h2>
                     <div class="cart-content">
                     </div>
                     <div class="total">
@@ -30,16 +35,19 @@
             </div>
         </header>
         <section class="shop container">
+            <br><br>
             <h2 class="section-title">Products</h2>
+            <br>
             <div class="shop-content">
                 {% for product in products %}
                     <div class="product-box">
                         {% if product.image %}
                             <img src="{{ product.image.url }}" alt="{{ product.product_name }}" class="product-img">
                         {% else %}
-                            <img src="{% static 'tuck_assets/img/default_image.jpg' %}" alt="No image available" class="product-img">
+                            <img src="{% static 'tuck_assets/placeholder-image.jpg' %}" alt="No image available" class="product-img">
                         {% endif %}
                         <h2 class="product-title">{{ product.product_name }}</h2>
+                        <div class="product-id" data-product-id="{{ product.product_id }}" style="display: none;"></div>
                         <span class="price">GHC {{ product.price }}</span>
                         <i class="bx bx-shopping-bag add-cart"></i>
                     </div>

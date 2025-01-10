@@ -38,8 +38,8 @@
 }
 
 :root {
-    --main-color: #DF3E55;
-    --text-color: #120E38;
+    --main-color: #3c49dd;
+    --text-color: #171059;
     --bg-color: #fff;
 }
 
@@ -71,7 +71,7 @@ header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 20px 0;
+    padding: 18px 0;
 }
 
 .logo {
@@ -79,6 +79,15 @@ header {
     color: var(--text-color);
     font-weight: 400;
 }
+/* .logo h2 {
+    font-size: var(--h2-font-size);
+    color: var(--primary-color);
+  } */
+.logo img{
+    width: 130px;
+    height: auto;
+    margin-top: 1rem;
+  }
 
 #cart-icon {
     font-size: 1.8rem;
@@ -99,6 +108,25 @@ header {
 
 .cart.active {
     right: 0;
+}
+.cart-content {
+    max-height: 500px; /* Set the maximum height for the cart content */
+    overflow-y: auto; /* Enable vertical scrolling */
+    padding: 10px; /* Add some padding if needed */
+}
+
+/* Optionally, style the scrollbar for better appearance */
+.cart-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.cart-content::-webkit-scrollbar-thumb {
+    background-color: var(--main-color);
+    border-radius: 4px;
+}
+
+.cart-content::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
 }
 
 .cart-title {
@@ -195,10 +223,11 @@ header {
 }
 
 .section-title {
-    font-size: 1.5rem;
+    font-size: 1.6rem;
     font-weight: 600;
     text-align: center;
     margin-bottom: 1.5rem;
+    padding: 10px 0;
 }
 
 .shop {

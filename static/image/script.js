@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (response.ok) {
                 showSuccess("Image uploaded successfully!");
-                updatePreview(imageFile, caption);
+                updatePreview(imageFile);
                 
             } else {
                 showError(data.message || "Failed to upload the image.");
@@ -65,7 +65,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         reader.onload = (e) => {
             previewImage.src = e.target.result;
-            captionPreview.textContent = caption;
             previewContainer.classList.remove("hidden");
             doneButton.classList.remove("hidden");
             uploadButton.classList.add("hidden");
