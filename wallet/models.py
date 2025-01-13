@@ -4,6 +4,8 @@ from authentication.models import User
 import uuid
 from django.contrib.auth.hashers import make_password
 from django.conf import settings
+
+from tuckshop.models import Order
 from .error import InsufficientBalance
 import random
 import string
@@ -91,6 +93,7 @@ class Wallet(models.Model):
 class Transaction(models.Model):
     # The wallet that holds this transaction.
     wallet = models.ForeignKey(Wallet, on_delete=models.SET_NULL, null=True)
+    order = models.ForeignKey(Order, on_delete=models.SET_NULL, null=True, blank=True)
     # The value of this transaction.
     value = models.DecimalField(max_digits=100, decimal_places=2)
     # The value of the wallet at the time of this

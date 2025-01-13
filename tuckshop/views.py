@@ -88,36 +88,7 @@ class ImgUploadAPIview(APIView):
             status=status.HTTP_200_OK,
         )
         
-        
-        # qs_serializer = UploadImageSerializer(
-        #     data={
-        #         "product_id": product_id,
-        #         "image": request.FILES.get("media"),
-        #     },
-            
-        #     context={"request":request}
-        # )
-        
-        # if qs_serializer.is_valid():
-        #     qs_serializer.save()
-        #     return Response(
-        #         {
-        #         "message": "Media uploaded successfully",
-        #         "data": qs_serializer.data,
-        #     },
-        #         status=status.HTTP_200_OK,
-        #     )
-        # else:
-        #     return Response(
-        #         {"message": qs_serializer.errors, "data":None},
-        #         status=status.HTTP_400_BAD_REQUEST,
-                
-                
-        #     )
     def get(self, request):
-        # qs = UploadImageModel.objects.all()
-        # qs_serializer = UploadImageSerializer(qs, many=True)
-        # return Response(qs_serializer.data, status=status.HTTP_400_BAD_REQUEST)
         product_id = request.GET.get('product_id')
         context = {"product_id": product_id}
         return render(request, 'image/index.html')
@@ -125,15 +96,11 @@ class ImgUploadAPIview(APIView):
 def save_order(request):
     if request.method == "POST":
         try:
-            # Parse the incoming JSON data
             order_data = json.loads(request.body)
-
             # Output the parsed data to the server console
             print("Order Data Received:", order_data)
-
             # Create a new Order
             order = Order.objects.create()
-
             for item in order_data['items']:
                 try:
                     product = Product.objects.get(product_id=item['product_id'])
@@ -187,11 +154,9 @@ def order_confirmation(request, order_id):
                 receipient_list = [user.email]
                 send_mail(subject, message, from_email, receipient_list, fail_silently=False)
                 return redirect ('product_list')
-            
 
             else:
                 messages.error(request, "Payment Unsuccessful")
-    
 
     return render(request, 'tuckshop/checkout.html', {'order': order, 'products':products,})
 
@@ -222,7 +187,6 @@ def checkout(request, order_id):
                 send_mail(subject, message, from_email, receipient_list, fail_silently=False)
                 return redirect ('product_list')
             
-
             else:
                 messages.error(request, "Payment Unsuccessful")
     return render(request, 'tuckshop/checkout.html')

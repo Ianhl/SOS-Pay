@@ -92,7 +92,7 @@
                 Add funds <i class="ri-arrow-right-line"></i>
               </button></a>
               <a href="/pay"><button class="btn view_more_btn">
-                Request for funds <i class="ri-arrow-right-line"></i>
+                Request Funds <i class="ri-arrow-right-line"></i>
               </button></a>
             <br>
             <br> 
@@ -102,7 +102,8 @@
             <br>
             <p>
               {% if user.is_authenticated %}
-                    Wallet code:<div id="wallet_code"> 
+              <div id="wallet_code" class="wallet_code">
+                    Wallet code: 
                       <span id="WalletValue">•••••</span>
                       <i id="toggleIcon2" class="fas fa-eye"></i>
 
@@ -195,7 +196,7 @@
       </div>
     </section>
 
-    <footer></footer>
+    
 
     <!-- ==== ANIMATE ON SCROLL JS CDN -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
@@ -310,6 +311,13 @@
         });
         // ==== TEAM IMAGE ==== //
         gsap.from(".team_img_wrapper img", {
+        opacity: 0,
+        y: 20,
+        delay: 3,
+        duration: 1,
+        });
+        // ==== TEAM IMAGE ==== //
+        gsap.from(".wallet_code", {
         opacity: 0,
         y: 20,
         delay: 3,
