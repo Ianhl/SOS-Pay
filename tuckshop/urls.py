@@ -10,6 +10,7 @@ urlpatterns = [
     path('media_upload', ImgUploadAPIview.as_view(), name="media_upload"),
     path('register', views.tuckshop_register, name="tuckshop_register"),
     path('view', views.product_list, name="product_list"),
+    path('login', views.login, name="login"),
     path('save-order/', views.save_order, name='save_order'),
     path('checkout/<int:order_id>/', views.checkout, name='checkout'),
     path('order-confirmation/<int:order_id>/', views.order_confirmation, name='order_confirmation'),

@@ -1,7 +1,9 @@
+from datetime import datetime
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+import pyotp
 from .models import User,Customer, shop_owner
 from vendors.models import Store
 from paystackpay import settings
@@ -12,6 +14,7 @@ from wallet.models import Wallet
 from django.shortcuts import get_object_or_404, render
 from main.views import main
 from wallet.encryption import decrypt, encrypt
+from .utils import send_otp
 
 # wallets are owned by users.
 
@@ -76,8 +79,8 @@ def signup(request):
 def signin(request):
     status = "remove"
     if request.method == "POST":
-        email = request.POST['email']
-        pass1 = request.POST['pass1']
+        email = request.POST['email1']
+        pass1 = request.POST['pass']
 
         user = authenticate(email=email, password=pass1)
 
@@ -88,6 +91,9 @@ def signin(request):
                 login(request, user)
                 return redirect('multi')
             else:
+                # request.session['user_email']= email
+                
+                # return redirect('otp')
                 login(request, user)
                 return redirect('main')
             
@@ -96,6 +102,8 @@ def signin(request):
             return redirect('signin')
 
     return render(request, "authentication/signinup.html", {"status":status})
+
+
 
 def signout(request):
     logout(request)
@@ -126,11 +134,49 @@ def pin(request):
         wallet.pin = encrypt(str(pin2))
         wallet.save()
         return redirect('main')
-        
-        
+    return render(request, "authentication/pin.html")
+
+
+def otp_view(request):
+    if request.method == "POST":
+        otp = request.POST['otp']
+        user_email = request.session['user_email']
+        user =  get_object_or_404(User, email=user_email)
+
+        otp_secret_key = request.session['otp_secret_key']
+        otp_valid_date = request.session['otp_valid_date']
+        email_otp = send_otp
+        subject = "Email Verification!"
+        message = "Hello " + user.first_name + "!!\n" + "Welcome to SOS Pay\n Thank You for visiting this site.\n Below is the otp to complete your login. Please type in this otp in the website to login. \n\n" +email_otp
+        from_email = 'larteyian@gmail.com'
+        receipient_list = [user.email]
+        send_mail(subject, message, from_email, receipient_list, fail_silently=False)
+
+        if otp_secret_key and otp_valid_date is not None:
+            valid_until = datetime.fromisoformat(otp_valid_date)
+
+            if valid_until > datetime.now():
+                totp = pyotp.TOTP(otp_secret_key, interval=60)
+                if totp.verify(otp):
+                    user =  get_object_or_404(User, email=user_email)
+                    login(request, user)
+
+                    del request.session['otp_secret_key']
+                    del request.session['otp_valid_date']
+
+                    return redirect('main')
+            else:
+                pass
+        else: 
+            pass
+
+    else: 
+        pass
+
+    return render(request, 'authentication/otp.html')       
        
 
-    return render(request, "authentication/pin.html")
+    
 
 # def signinup(request):
 #     status = "remove"

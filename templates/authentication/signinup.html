@@ -5,27 +5,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% comment %} <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" crossorigin="anonymous"> {% endcomment %}
+
 
     <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    
 
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>        <!--https://boxicons.com/ -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>       <!--https://boxicons.com/ -->
 
-    <title>Login & Register Page  ->> Code With Patel</title>
+    <title>Login & Register Page</title>
 </head>
 
 <body>
-    {% for message in messages %}
-                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role = "alert">
-                    <strong>Message:</strong> {{ message }}
-                    <button type="button" class="close" data-dismiss="alert" aria-label="close">
-                    <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-        {% endfor %}
+    <header>
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </header>
+    <div class="alert hide">
+        <span class="fas fa-exclamation-circle"></span>
+        <span class="msg" id="msg">Warning: This is a warning alert!</span>
+        <div class="close-btn">
+           <span class="fas fa-times"></span>
+        </div>
+    </div>
 
     <div class="container" id="container">
         <div class="form-container sign-up">
-            <form action="/login/signup" method="post">
+            
+            <form id="signupForm" method="post">
             {% csrf_token %}
                 <h1>Create Account</h1>
                 <br>
@@ -35,13 +49,13 @@
                 <input type="email" id="email" name="email"placeholder="Enter E-mail" Required>
                 <input type="password" id="pass1" name="pass1" placeholder="Enter Password" Required>
                 <input type="password" id="pass2" name="pass2" placeholder="Confirm Password" Required>
-                <button type="submit">Sign Up</button>
+                <button type="button" id="signupButton">Sign Up</button>
             </form>
         </div>
 
 
         <div class="form-container sign-in">
-            <form action ="/login/signin" method="post">
+            <form id="signinForm" method="post">
             {% csrf_token %}
                 <h1>Sign In</h1>
                 <div class="social-icons">
@@ -51,24 +65,32 @@
                     <a href="#" class="icons"><i class='bx bxl-linkedin'></i></a>
                 </div>
                 <span>Login With Email & Password</span>
-                <input type="text" id="email" name="email" placeholder="Enter Email">
-                <input type="password" id="pass1" name="pass1" placeholder="Enter Password">
+                <input type="text" id="email1" name="email1" placeholder="Enter Email">
+                <input type="password" id="pass" name="pass" placeholder="Enter Password">
                 <a href="#">Forget Password?</a>
-                <button type="submit">Sign In</button>
+                <button type="button" id="signinButton">Sign In</button>
             </form>
         </div>
 
 
         <div class="toggle-container">
             <div class="toggle">
+                
                 <div class="toggle-panel toggle-left">
-                    <h1>Welcome To <br>HGIC Shops</h1>
-                    <p>Sign in With ID & Passowrd</p>
+                    <div class="login__img">
+                        <img src="{% static 'soshgic logo white.png' %}" style= "border-radius: 10%; width: 200px;" alt="">
+                    </div>
+                    <h1>Welcome To <br>SOS Pay</h1>
+                    <p>Sign in With Email & Passowrd</p>
                     <a href="/login/signin"> <button class="hidden" id="login">Sign In</button></a>
                 </div>
+
                 <div class="toggle-panel toggle-right">
+                    <div class="login__img">
+                        <img src="{% static 'soshgic logo white.png' %}" style= "border-radius: 10%; width: 200px;" alt="">
+                    </div>
                     <h1>Hii Students</h1>
-                    <p>Sign up to "HGIC Shops" to start seemless shopping</p>
+                    <p>Sign up to "SOS Pay" to start seemless shopping</p>
                     <a href="/login/signup"> <button class="hidden" id="register">Sign Up</button></a>
                 </div>
             </div>
@@ -79,6 +101,45 @@
         const container = document.getElementById('container');
         const registerBtn = document.getElementById('register');
         const loginBtn = document.getElementById('login');
+        function validate_email(email) {
+            expression = /^[^@]+@\w+(\.\w+)+\w$/
+            if (expression.test(email) == true) {
+            // Email is good
+                return true
+            } else {
+            // Email is not good
+                return false
+          }
+        }
+        function validate_email_ending(email) {
+            if (email.endsWith("@soshgic.edu.gh")) {
+                return true
+            } else{
+                return false
+            }
+        }
+        function validate_password(password) {
+            // Firebase only accepts lengths greater than 6
+            if (password < 6) {
+              return false
+            } else {
+              return true
+            }
+          }
+        
+        function validate_field(field) {
+            if (field == null) {
+              return false
+            }
+          
+            if (field.length <= 0) {
+              return false
+            } else {
+              return true
+            }
+          }
+          
+        
         
         container.classList.add("{{status}}");
 
@@ -89,7 +150,92 @@
         loginBtn.addEventListener('click', () => {
             container.classList.remove("active");
         });
+        document.getElementById("signinButton").addEventListener("click", function () {
+            // Get input values
+            const email = document.getElementById("email1").value.trim();
+            const password = document.getElementById("pass").value.trim();
+    
+            
+            if (validate_email(email) == false || validate_password(password) == false) {
+                warning_alert('Email or Password is Outta Line!!')
+                return
+                // Don't continue running the code
+              }
+            if (validate_field(email) == false) {
+                warning_alert('One or More Extra Fields is Outta Line!!')
+                return
+            }
+            if (validate_email_ending(email) == false) {
+                warning_alert('Email must end in @soshgic.edu.gh !!')
+                return
+            }
+            
+            // Submit the form if validation passes
+            alert("Validation passed. Signing in...");
+    
+            document.getElementById("signinForm").submit();
+        });
+
+
+        document.getElementById("signupButton").addEventListener("click", function () {
+            // Get input values
+            const email = document.getElementById("email").value.trim();
+            const pass1 = document.getElementById("pass1").value.trim();
+            const pass2 = document.getElementById("pass2").value.trim();
+            const fname = document.getElementById("fname").value.trim();
+            const lname = document.getElementById("lname").value.trim();
+            
+    
+            
+            if (validate_email(email) == false || validate_password(pass1) == false) {
+                warning_alert('Email or Password is Outta Line!!')
+                return
+                // Don't continue running the code
+              }
+            if (validate_field(email) == false) {
+                warning_alert('Email is Outta Line!!')
+                return
+            }
+            if (validate_field(fname) == false || validate_field(lname) == false  ) {
+                warning_alert('A field is Outta Line!!')
+                return
+            }
+            if (validate_email_ending(email) == false) {
+                watning_alert('Email must end in @soshgic.edu.gh !!')
+                return
+            }
+            if (pass1 != pass2){
+                warning_alert('Passwords do not match')
+                return
+            }
+            
+            // Submit the form if validation passes
+            alert("Validation passed. Signing in...");
+    
+            document.getElementById("signupForm").submit();
+        });
+        
+        function warning_alert (alert) { 
+            var alert_msg = document.getElementById('msg');
+
+            // replace text in HTML string:
+            alert_msg.innerHTML = alert_msg.innerHTML.replace('This is a warning alert!', alert);
+            $('.alert').addClass("show");
+            $('.alert').removeClass("hide");
+            $('.alert').addClass("showAlert");
+            setTimeout(function(){
+              $('.alert').removeClass("show");
+              $('.alert').addClass("hide");
+            },5000);
+          };
+          $('.close-btn').click(function(){
+            $('.alert').removeClass("show");
+            $('.alert').addClass("hide");
+          });
     </script>
+    {% comment %} <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script> {% endcomment %}
 </body>
 
 </html>

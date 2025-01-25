@@ -14,6 +14,7 @@ from pathlib import Path
 import os
 
 from django.forms import IntegerField
+from django.contrib.messages import constants as messages
 
 
 # from . info import *
@@ -81,6 +82,7 @@ AUTH_USER_MODEL = 'authentication.User'
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django_session_timeout.middleware.SessionTimeoutMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -169,5 +171,19 @@ PAYSTACK_SECRET_KEY = 'sk_test_ae2269b000a167f81ec13904fae71fdaaae9744b'
 PAYSTACK_PUBLIC_KEY = 'pk_test_95a53b4dcfd919ddc7071a1d4162785fd0ed0613'
 
 # SESSION EXPIRY
-SESSION_COOKIE_AGE = 86400 
-SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+# SESSION_COOKIE_AGE = 60
+# SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+# LOGOUT_REDIRECT_URL = '/login/signin'
+
+
+
+SESSION_EXPIRE_SECONDS = 172800
+SESSION_TIMEOUT_REDIRECT = '/login/signin'
+
+MESSAGE_TAGS = {
+        messages.DEBUG: 'alert-secondary',
+        messages.INFO: 'alert-info',
+        messages.SUCCESS: 'alert-success',
+        messages.WARNING: 'alert-warning',
+        messages.ERROR: 'alert-danger',
+ }

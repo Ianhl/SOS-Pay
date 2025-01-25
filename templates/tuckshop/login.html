@@ -1,0 +1,36 @@
+{% load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animated Login Form using Html and Css</title>
+    <link rel="stylesheet" href="{% static 'tuck_assets/login.css'%}">
+</head>
+<body>
+    <!-- This is a simple login form -->
+    <section>
+        <span></span>
+        <div class="signin">
+            <div class="content">
+                <h2>Login</h2>
+                <div class="form">
+                    <form action="/tuckshop/login" method="post">
+                        {% csrf_token %}
+                    <div class="inputBox">
+                        <input type="email" name='email' required> <i>Email</i>
+                    </div>
+                    <div class="inputBox">
+                        <input type="password" name='password' required> <i>Password</i>
+                    </div>
+                    <div class="inputBox">
+                        <input type="submit" value="Login">
+                    </div>
+                </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End of simple login form -->
+</body>
+</html>

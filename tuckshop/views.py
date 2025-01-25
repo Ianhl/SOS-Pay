@@ -2,6 +2,7 @@
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.contrib import messages
+import authentication
 from authentication.models import Customer
 from wallet.encryption import decrypt
 from wallet.models import Wallet
@@ -17,11 +18,12 @@ from django.http import JsonResponse
 from .models import Product, Order, OrderItem
 import json
 from django.core.mail import send_mail
+from django.contrib.auth import authenticate, login, logout
 # Create your views here.
 
-@user_is_tuckshop_owner
+
 def tuckshop_main(request):
-    return render(request, "tuckshop/index.html")
+    return render(request, "tuckshop/hh.html")
 
 def product_list(request):
      # Fetch all products, including their image fields
@@ -190,3 +192,23 @@ def checkout(request, order_id):
             else:
                 messages.error(request, "Payment Unsuccessful")
     return render(request, 'tuckshop/checkout.html')
+
+
+def login(request):
+    status = "remove"
+    if request.method == "POST":
+        email = request.POST['email']
+        password = request.POST['password']
+
+        user = authenticate(email=email, password=password)
+
+        if user is not None and email == "larteyian@gmail.com":
+            
+            login(request, user)
+            return redirect('product_list')
+            
+        else:
+            messages.error(request, "Bad Credentials")
+            return redirect('login')
+
+    return render(request, "tuckshop/login.html", {"status":status})
