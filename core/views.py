@@ -43,7 +43,8 @@ def verify_payment(request: HttpRequest, ref: str) -> HttpResponse:
         # wallet_id = cwallet.id
         code = payment.receipient_code
         wallet = get_object_or_404(Wallet, private_code = code)
-        Wallet.deposit(wallet,payment.amount)
+        Wallet.deposit(wallet,payment.amount, "Paystack Payment")
+
         messages.success(request, "Verification Successful")
     else: 
        messages.error(request, "Verification Bad")

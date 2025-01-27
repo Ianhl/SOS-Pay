@@ -6,9 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Multi-Step Sign-Up</title>
     <link rel="stylesheet" href="{% static 'multi.css' %}">
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 </head>
 <body>
     <div>
+        <div class="alert hide">
+            <span class="fas fa-exclamation-circle"></span>
+            <span class="msg" id="msg">Warning: This is a warning alert!</span>
+            <div class="close-btn">
+               <span class="fas fa-times"></span>
+            </div>
+        </div>
         <div class="logo">
             <img id="logo" src="{% static 'sos-pay-high-resolution-logo.png'%}" alt="logo">
         </div>
@@ -47,7 +55,7 @@
                 </li>
             </ul>
             <!-- Step Wise Form Content -->
-            <form action ="/login/multi" id="userAccountSetupForm" name="userAccountSetupForm" enctype="multipart/form-data" method="POST">
+            <form id="userAccountSetupForm" name="userAccountSetupForm" enctype="multipart/form-data" method="POST">
             {% csrf_token %}
                 <!-- Step 1 Content -->
                 <section id="step-1" class="form-step">
@@ -189,7 +197,7 @@
                             <input
                               type="email"
                               name="parent2_email"
-                              id="parent1_email"
+                              id="parent2_email"
                               placeholder="Enter parent email"
                               class="formbold-form-input"
                             />
@@ -208,7 +216,7 @@
                     
                     <div class="mt-3">
                         <button class="button btn-navigate-form-step" type="button" step_number="2">Prev</button>
-                        <button class="button submit-btn" type="submit">Proceed</button>
+                        <button class="button submit-btn" type="button" id="SetupButton">Proceed</button>
                     </div>
                 </section>
             </form>

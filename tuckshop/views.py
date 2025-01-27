@@ -146,7 +146,7 @@ def order_confirmation(request, order_id):
         user_lname = user.last_name
         if fname == user_fname and lname == user_lname: 
             if pin == wallet_pin:
-                wallet.transfer(wallet=tuck_wallet, value=amount_due)
+                wallet.transfer(wallet=tuck_wallet, value=amount_due, sender="Tuckshop Debit")
                 messages.success(request, "Payment successful")
                 subject = "Payment made to tuckshop!"
                 amount_in_words = convert_num(amount_due)

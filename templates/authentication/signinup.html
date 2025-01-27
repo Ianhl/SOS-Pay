@@ -119,8 +119,7 @@
             }
         }
         function validate_password(password) {
-            // Firebase only accepts lengths greater than 6
-            if (password < 6) {
+            if (password.length < 8) {
               return false
             } else {
               return true
@@ -153,10 +152,10 @@
         document.getElementById("signinButton").addEventListener("click", function () {
             // Get input values
             const email = document.getElementById("email1").value.trim();
-            const password = document.getElementById("pass").value.trim();
+            const pass = document.getElementById("pass").value.trim();
     
             
-            if (validate_email(email) == false || validate_password(password) == false) {
+            if (validate_email(email) == false || validate_password(pass) == false) {
                 warning_alert('Email or Password is Outta Line!!')
                 return
                 // Don't continue running the code

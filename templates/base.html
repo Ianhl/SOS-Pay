@@ -108,6 +108,17 @@
         CloseBtnId.addEventListener("click", () => {
         navId.classList.remove("show");
         });
+        {% comment %} const toggleBtn = document.querySelector(".toggle_btn"); {% endcomment %}
+        {% comment %} const navMenu = document.querySelector(".nav_menu");
+        const closeBtn = document.querySelector(".close_btn");
+
+        toggleBtn.addEventListener("click", () => {
+          navMenu.classList.add("show_nav");
+        });
+
+        closeBtn.addEventListener("click", () => {
+          navMenu.classList.remove("show_nav");
+        }); {% endcomment %}
 
         // ==== Animate on Scroll Initialize  ==== //
         AOS.init();

@@ -48,17 +48,18 @@ class Wallet(models.Model):
     #     # Generate a unique private code
     #     return str(uuid.uuid4().hex[:12].upper())  # Example: 8e3a8b4b4c6e
 
-    def deposit(self, value):
+    def deposit(self, value, sender):
     
         self.transaction_set.create(
             value=value,
-            running_balance=self.balance + value
+            running_balance=self.balance + value,
+            transaction_from= sender,
         )
         self.balance += value
         self.save()
 
 
-    def withdraw(self, value):
+    def withdraw(self, value, sender):
         """Withdraw's a value from the wallet.
 
         Also creates a new transaction with the withdraw
@@ -76,7 +77,8 @@ class Wallet(models.Model):
 
         self.transaction_set.create(
             value=-value,
-            running_balance=self.balance - value
+            running_balance=self.balance - value, 
+            transaction_from= sender,
         )
         self.balance -= value
         self.save()
@@ -99,8 +101,12 @@ class Transaction(models.Model):
     # The value of the wallet at the time of this
     # transaction.
     # uid = models.UUIDField(unique=True, default=uuid.uuid4, editable=False)
+    transaction_from = models.CharField(max_length=100, default="")
     running_balance = models.DecimalField(max_digits=10, decimal_places=2)
     # The date/time of the creation of this transaction.
     uid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     created_at = models.DateTimeField(auto_now_add=True)
     email_otp = models.CharField(max_length=6, null=True, blank=True)
+
+
+
