@@ -25,8 +25,7 @@ class Product(models.Model):
     
     def __str__(self):
         return self.product_name
-    
-    
+
     
 class UploadImageModel(models.Model):
     image = models.ImageField(upload_to="images")
@@ -55,3 +54,25 @@ class OrderItem(models.Model):
     
     def get_total_price(self):
         return self.product.price * self.quantity
+    
+
+class Sale(models.Model):
+    order = models.OneToOneField(Order, related_name='sale', on_delete=models.CASCADE)
+    user = models.OneToOneField(Order, related_name='user', on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Sale - Order {self.order.id}"
+
+    @property
+    def total_quantity(self):
+        """Calculate the total quantity of products in this sale."""
+        return sum(item.quantity for item in self.order.items.all())
+
+    @property
+    def total_price(self):
+        """Calculate the total price of this sale."""
+        return self.order.get_total_price()
+
+
+    
