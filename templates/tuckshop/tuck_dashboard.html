@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <!----======== CSS ======== -->
-    <link rel="stylesheet" href= "{% static 'tuck_assets/hh.css'%} ">
+    <link rel="stylesheet" href= "{% static 'tuck_assets/tuck_dashboard.css'%} ">
      
     <!----===== Iconscout CSS ===== -->
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
@@ -87,12 +87,12 @@
                     <div class="box box1">
                         <i class="uil uil-dollar-alt"></i>
                         <span class="text">Total Amount</span>
-                        <span class="number">{{ total_revenue }}</span>
+                        <span class="number">{{ total_revenue }}.00</span>
                     </div>
                     <div class="box box2">
                         <i class="uil uil-bill"></i>
                         <span class="text">Monthly Revenue</span>
-                        <span class="number">{{ total_revenue }}</span>
+                        <span class="number">{{ total_revenue }}.00</span>
                     </div>
                     <div class="box box3">
                         <i class="uil uil-analysis"></i>
@@ -106,6 +106,44 @@
                     <i class="uil uil-clock-three"></i>
                     <span class="text">Recent Activity</span>
                 </div>
+                <h2 class="transaction-header">Recent Transactions</h2>
+                <table class="transactions-table">
+                <thead>
+                    <tr>
+                    <th>Description</th>
+                    <th>Value</th>
+                    <th>Running Balance</th>
+                    <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for transaction in page_obj %}
+                    <tr>
+                        <td>{{ transaction.transaction_from }}</td>
+                        <td data-label="Value">{{ transaction.value }}</td>
+                        <td data-label="Running Balance">{{ transaction.running_balance }}</td>
+                        <td data-label="Date">{{ transaction.created_at|date:"Y-m-d H:i" }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4" style="text-align: center; color: var(--text-content);">
+                        No transactions found.
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                </table>
+
+                <div style="margin-top: 1.5rem;">
+                <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+                {% if page_obj.has_previous %}
+                    <a href="?page={{ page_obj.previous_page_number }}" class="btn view_more_btn">Previous</a>
+                {% endif %}
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}" class="btn view_more_btn">Next</a>
+                {% endif %}
+                </div>
+
                 
             </div>
         </div>

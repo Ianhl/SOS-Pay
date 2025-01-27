@@ -447,3 +447,98 @@ nav.close ~ .dashboard .top{
         width: 100%;
     }
 }
+
+/* ==== TRANSACTIONS TABLE ==== */
+.transaction-header{
+    padding:30px;
+    text-align:center;
+  
+  }
+  
+  .transactions-table {
+    width: 95%;
+    margin-top: 2rem;
+    border-collapse: collapse;
+    background-color: #fff;
+    box-shadow: 0 0.5rem 1.5rem rgba(22, 28, 45, 0.1);
+    border-radius: 8px;
+    
+    margin-left:3rem;
+    margin-right:2rem;
+    overflow: hidden;
+    font-family: "Inter", sans-serif; /* Match the current text font */
+  }
+  
+  .transactions-table thead {
+    background-color: var(--primary-color);
+    color: #fff;
+    text-align: center; /* Center text in header */
+  }
+  
+  .transactions-table thead th {
+    padding: 1rem;
+    font-size: 16px;
+    font-weight: 500;
+    text-transform: uppercase;
+  }
+  
+  .transactions-table tbody tr {
+    border-bottom: 1px solid #e6e8f0;
+    text-align: center; /* Center text in table rows */
+  }
+  
+  .transactions-table tbody tr:last-child {
+    border-bottom: none;
+  }
+  
+  .transactions-table tbody tr:hover {
+    background-color: #f5f7ff;
+  }
+  
+  .transactions-table tbody td {
+    padding: 1rem;
+    font-size: 15px;
+    color: var(--lg-heading);
+    vertical-align: middle;
+    text-align: center; /* Center text in each cell */
+  }
+  
+  .transactions-table tbody td:nth-child(1) {
+    text-align: left; /* Align "Description" column text to the left */
+  }
+  .btn-view_more_btn{
+    padding:20px;
+  
+  }
+  
+  /* ==== MOBILE RESPONSIVE FOR TABLE ==== */
+  @media screen and (max-width: 768px) {
+    .transactions-table thead {
+      display: none;
+    }
+  
+    .transactions-table tbody tr {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 1rem;
+      border-bottom: 2px solid #e6e8f0;
+    }
+  
+    .transactions-table tbody tr:last-child {
+      border-bottom: none;
+    }
+  
+    .transactions-table tbody td {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.8rem;
+      font-size: 14px;
+      text-align: left; /* Align text for better readability */
+    }
+  
+    .transactions-table tbody td:before {
+      content: attr(data-label);
+      font-weight: 500;
+      color: var(--text-content);
+    }
+  }

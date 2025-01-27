@@ -3,8 +3,9 @@ from django.shortcuts import get_object_or_404, render, redirect
 from wallet.models import Wallet, Transaction
 from main.views import main
 from django.core.paginator import Paginator
-
+from django.contrib.auth.decorators import login_required
 # Create your views here.
+@login_required
 def wallet(request):
     if request.user.is_authenticated:
         user = request.user

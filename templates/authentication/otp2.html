@@ -1,0 +1,35 @@
+{% load static %}
+<!DOCTYPE html>
+<!-- Coding By CodingNepal - codingnepalweb.com -->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+   <title>OTP Verification Form</title>
+    <link rel="stylesheet" href="{% static 'pin.css' %}" />
+    <!-- Boxicons CSS -->
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+   <script src="{% static 'pin.js' %}" defer></script>
+  </head>
+  <body>
+    <div class="container">
+        <h2>Enter OTP</h2>
+      <header>
+        <img id="logo" src="{% static 'sos-pay-high-resolution-logo-transparent.png'%}" alt="logo">
+      </header>
+      <form action="/login/otp" method="post">
+        {% csrf_token %}
+        <div class="input-field">
+          <input id="p1" name="p1" type="number" required/>
+          <input id="p2" name="p2" type="number" disabled required/>
+          <input id="p3" name="p3" type="number" disabled required/>
+          <input id="p4" name="p4" type="number" disabled required/>
+          <input id="p5" name="p5" type="number" disabled required/>
+          <input id="p6" name="p6" type="number" disabled required/>
+        </div>
+        <button type="submit">Enter</button>
+      </form>
+    </div>
+  </body>
+</html>

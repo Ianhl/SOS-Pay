@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Student Details - SOS PAY
+{% endblock %}
+
+{% block content %}
+<section class="container details-section">
+  <div class="details-card">
+    <div class="details-header">
+      <h2>Student Details</h2>
+      <div class="divider"></div>
+    </div>
+
+    <div class="details-body">
+      <div class="details-row">
+        <i class="ri-user-line"></i>
+        <div>
+          <label>Full Name</label>
+          <span>{{ customer.user.first_name }} {{ customer.user.last_name }}</span>
+        </div>
+      </div>
+      <div class="details-row">
+        <i class="ri-mail-line"></i>
+        <div>
+          <label>Email</label>
+          <span>{{ customer.user.email }}</span>
+        </div>
+      </div>
+      <div class="details-row">
+        <i class="ri-calendar-line"></i>
+        <div>
+          <label>Year Group</label>
+          <span>{{ customer.get_year_group_display }}</span>
+        </div>
+      </div>
+      <div class="details-row">
+        <i class="ri-building-line"></i>
+        <div>
+          <label>Hostel</label>
+          <span>{{ customer.get_hostel_display }}</span>
+        </div>
+      </div>
+      <div class="details-row">
+        <i class="ri-home-4-line"></i>
+        <div>
+          <label>Room Number</label>
+          <span>{{ customer.room_num }}</span>
+        </div>
+      </div>
+      <div class="details-row">
+        <i class="ri-calendar-event-line"></i>
+        <div>
+          <label>Graduation Year</label>
+          <span>{{ customer.grad_year }}</span>
+        </div>
+      </div>
+      <div class="details-row">
+        <i class="ri-user-heart-line"></i>
+        <div>
+          <label>Parent 1</label>
+          <span>{{ customer.parent1_first_name }} {{ customer.parent1_last_name }} ({{ customer.parent1_email }})</span>
+        </div>
+      </div>
+      <div class="details-row">
+        <i class="ri-user-heart-line"></i>
+        <div>
+          <label>Parent 2</label>
+          <span>{{ customer.parent2_first_name }} {{ customer.parent2_last_name }} ({{ customer.parent2_email }})</span>
+        </div>
+      </div>
+      <div class="details-row">
+        <i class="ri-barcode-box-line"></i>
+        <div>
+          <label>Student Code</label>
+          <span id="StudentCode">•••••</span>
+          <i id="toggleIcon" class="fas fa-eye"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const StudentCode = document.getElementById("StudentCode");
+        const toggleIcon = document.getElementById("toggleIcon");
+
+        let isVisible = false;
+
+        toggleIcon.addEventListener("click", () => {
+            if (isVisible) {
+                StudentCode.textContent = "•••••";
+                toggleIcon.classList.remove("fa-eye");
+                toggleIcon.classList.add("fa-eye-slash");
+            } else {
+                StudentCode.textContent = "{{ customer.student_code }}"; // Replace with actual balance dynamically
+                toggleIcon.classList.remove("fa-eye-slash");
+                toggleIcon.classList.add("fa-eye");
+            }
+            isVisible = !isVisible;
+        
+        });
+    });
+        
+</script>
+{% endblock %}

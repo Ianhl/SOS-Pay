@@ -83,13 +83,13 @@ class Wallet(models.Model):
         self.balance -= value
         self.save()
 
-    def transfer(self, wallet, value):
+    def transfer(self, wallet, value, sender):
         """Transfers an value to another wallet.
 
         Uses `deposit` and `withdraw` internally.
         """
-        self.withdraw(value)
-        wallet.deposit(value)
+        self.withdraw(value, sender)
+        wallet.deposit(value, sender)
 
 
 class Transaction(models.Model):

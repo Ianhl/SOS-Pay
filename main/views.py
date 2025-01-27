@@ -1,5 +1,8 @@
 from django.shortcuts import render
 import datetime
+from django.contrib.auth.decorators import login_required
+
+from authentication.models import Customer
 
 # Create your views here.
 current_time = datetime.datetime.now()
@@ -20,3 +23,9 @@ def greet(time):
     else: 
         greeting = "Good Evening,"
     return greeting
+
+@login_required
+def customer_detail(request):
+    user =request.user
+    customer = Customer.objects.get(user=user)
+    return render(request, 'authentication/profile.html', {'customer': customer})

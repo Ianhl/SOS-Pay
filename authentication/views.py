@@ -1,4 +1,5 @@
 from datetime import datetime
+import random
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.contrib import messages
@@ -15,6 +16,7 @@ from django.shortcuts import get_object_or_404, render
 from main.views import main
 from wallet.encryption import decrypt, encrypt
 from .utils import send_otp
+from django.contrib.auth.decorators import login_required
 
 # wallets are owned by users.
 
@@ -83,19 +85,29 @@ def signin(request):
         pass1 = request.POST['pass']
 
         user = authenticate(email=email, password=pass1)
+        user_id = user.id
 
         if user is not None:
             
             # return render(request, "authentication/index.html", {'fname': fname})
             if user.last_login == None:
-                login(request, user)
-                return redirect('multi')
+                # login(request, user)
+                return redirect(f'/login/multi/{user_id}/')
             else:
                 # request.session['user_email']= email
                 
                 # return redirect('otp')
-                login(request, user)
-                return redirect('main')
+                send_otp(request)
+                email_otp= send_otp(request)
+                # email_otp = send_otp(request)
+                subject = "Email Verification!"
+                message = "Hello " + user.first_name +  "!!\n" + "Welcome to SOS Pay\n Thank You for visiting this site.\n Below is the otp to complete your login. Please type in this otp in the website to login:\n" +email_otp
+                from_email = 'larteyian@gmail.com'
+                receipient_list = [user.email]
+                send_mail(subject, message, from_email, receipient_list, fail_silently=False)
+                request.session['email']=email
+                return redirect('otp')
+
             
         else:
             messages.error(request, "Bad Credentials")
@@ -110,7 +122,8 @@ def signout(request):
     messages.success(request, "Logged out successfully")
     return redirect('main')
 
-def pin(request):
+def pin(request, user_id):
+    user = User.objects.get(user_id=user_id)
     if request.method == "POST":
         p1 = request.POST['p1']
         p2 = request.POST['p2']
@@ -129,7 +142,7 @@ def pin(request):
         
         if pin1 != pin2:
             messages.error(request, "Pins didn't match")
-        user = request.user
+        
         wallet = get_object_or_404(Wallet, user = user)
         wallet.pin = encrypt(str(pin2))
         wallet.save()
@@ -138,27 +151,30 @@ def pin(request):
 
 
 def otp_view(request):
+    
+
     if request.method == "POST":
-        otp = request.POST['otp']
-        user_email = request.session['user_email']
-        user =  get_object_or_404(User, email=user_email)
+        p1 = request.POST['p1']
+        p2 = request.POST['p2']
+        p3 = request.POST['p3']
+        p4 = request.POST['p4']
+        p5 = request.POST['p5']
+        p6 = request.POST['p6']
+        otp = int(str(p1)+str(p2)+str(p3)+str(p4)+str(p5)+str(p6))
+        
+        email = request.session['email']
+        user =  get_object_or_404(User, email=email)
 
         otp_secret_key = request.session['otp_secret_key']
         otp_valid_date = request.session['otp_valid_date']
-        email_otp = send_otp
-        subject = "Email Verification!"
-        message = "Hello " + user.first_name + "!!\n" + "Welcome to SOS Pay\n Thank You for visiting this site.\n Below is the otp to complete your login. Please type in this otp in the website to login. \n\n" +email_otp
-        from_email = 'larteyian@gmail.com'
-        receipient_list = [user.email]
-        send_mail(subject, message, from_email, receipient_list, fail_silently=False)
-
+        
         if otp_secret_key and otp_valid_date is not None:
             valid_until = datetime.fromisoformat(otp_valid_date)
 
             if valid_until > datetime.now():
                 totp = pyotp.TOTP(otp_secret_key, interval=60)
                 if totp.verify(otp):
-                    user =  get_object_or_404(User, email=user_email)
+                    user =  get_object_or_404(User, email=email)
                     login(request, user)
 
                     del request.session['otp_secret_key']
@@ -166,14 +182,14 @@ def otp_view(request):
 
                     return redirect('main')
             else:
-                pass
+                messages.error(request, "Invalid otp")
         else: 
-            pass
+            messages.error(request, "OTP expired")
 
     else: 
-        pass
+        messages.error(request, "Something went wrong")
 
-    return render(request, 'authentication/otp.html')       
+    return render(request, 'authentication/otp2.html')       
        
 
     
@@ -182,7 +198,8 @@ def otp_view(request):
 #     status = "remove"
 #     return render(request, "authentication/signinup.html", {"status":status})
 
-def multi(request):
+def multi(request, user_id):
+    user = User.objects.get(user_id=user_id)
     if request.method == "POST":
         grad_year = request.POST['grad_year']
         year_group = request.POST['year_group']
@@ -196,7 +213,6 @@ def multi(request):
         parent2_last_name = request.POST['parent2_last_name']
         parent2_email = request.POST['parent2_email']
         
-        user = request.user
         customer = get_object_or_404(Customer,user=user)
         
         customer.grad_year = grad_year
@@ -215,7 +231,7 @@ def multi(request):
         customer.is_active = True
         customer.save()
         
-        return redirect('pin')  
+        return redirect(f'/login/pin/{user_id}/')  
         
     return render(request, "authentication/multi.html")
 

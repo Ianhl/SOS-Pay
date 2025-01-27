@@ -29,7 +29,7 @@ def tuckshop_main(request):
     # Total revenue from all sales
     total_revenue = Sale.objects.aggregate(total=Sum('order__items__product__price'))['total'] or 0
 
-    return render(request, "tuckshop/hh.html", {'total_sales_count': total_sales_count, 'total_revenue': total_revenue })
+    return render(request, "tuckshop/tuck_dashboard.html", {'total_sales_count': total_sales_count, 'total_revenue': total_revenue })
 
 def product_list(request):
      # Fetch all products, including their image fields
@@ -152,7 +152,7 @@ def order_confirmation(request, order_id):
         user_lname = user.last_name
         if fname == user_fname and lname == user_lname: 
             if pin == wallet_pin:
-                Sale.object.create(order=order, user=user)
+                Sale.objects.create(order=order, user=user)
                 wallet.transfer(wallet=tuck_wallet, value=amount_due, sender="Tuckshop Debit")
                 messages.success(request, "Payment successful")
                 subject = "Payment made to tuckshop!"

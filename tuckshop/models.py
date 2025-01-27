@@ -1,5 +1,7 @@
 from django.db import models
 import uuid
+
+from authentication.models import User
 # Create your models here.
 
 class Product(models.Model):
@@ -58,7 +60,7 @@ class OrderItem(models.Model):
 
 class Sale(models.Model):
     order = models.OneToOneField(Order, related_name='sale', on_delete=models.CASCADE)
-    user = models.OneToOneField(Order, related_name='user', on_delete=models.CASCADE)
+    user = models.ForeignKey(User, related_name='user', on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
