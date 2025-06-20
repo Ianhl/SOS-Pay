@@ -20,24 +20,28 @@ import json
 from django.core.mail import send_mail
 from django.contrib.auth import authenticate, login, logout
 from django.db.models import Sum
+from django.contrib.auth.decorators import login_required
+
 # Create your views here.
 
-
+@user_is_tuckshop_owner
 def tuckshop_main(request):
     total_sales_count = Sale.objects.count()
 
     # Total revenue from all sales
     total_revenue = Sale.objects.aggregate(total=Sum('order__items__product__price'))['total'] or 0
-
+        
     return render(request, "tuckshop/tuck_dashboard.html", {'total_sales_count': total_sales_count, 'total_revenue': total_revenue })
 
+@user_is_tuckshop_owner
 def product_list(request):
      # Fetch all products, including their image fields
     products = Product.objects.all()
 
     return render(request, "tuckshop/index.html", {'products': products})
 
-
+@login_required
+@user_is_tuckshop_owner
 def tuckshop_register(request):
     if request.method == "POST":
         product_name = request.POST['product_name']
@@ -100,7 +104,9 @@ class ImgUploadAPIview(APIView):
         product_id = request.GET.get('product_id')
         context = {"product_id": product_id}
         return render(request, 'image/index.html')
-    
+
+@login_required
+@user_is_tuckshop_owner  
 def save_order(request):
     if request.method == "POST":
         try:
@@ -134,6 +140,8 @@ def save_order(request):
     else:
         return JsonResponse({'message': 'Invalid request method'}, status=400)
 
+@login_required
+@user_is_tuckshop_owner
 def order_confirmation(request, order_id):
     order = Order.objects.get(id=order_id)
     products = Product.objects.all()
@@ -169,7 +177,8 @@ def order_confirmation(request, order_id):
 
     return render(request, 'tuckshop/checkout.html', {'order': order, 'products':products,})
 
-
+@login_required
+@user_is_tuckshop_owner
 def checkout(request, order_id):
     if request.method == "POST":
         order = get_object_or_404(Order, order_id= order_id)
@@ -201,7 +210,7 @@ def checkout(request, order_id):
     return render(request, 'tuckshop/checkout.html')
 
 
-def login(request):
+def login_user(request):
     status = "remove"
     if request.method == "POST":
         email = request.POST['email']
@@ -209,13 +218,13 @@ def login(request):
 
         user = authenticate(email=email, password=password)
 
-        if user is not None and email == "larteyian@gmail.com":
-            
-            login(request, user)
-            return redirect('product_list')
+        if user is not None:
+            if  email == "larteyian@gmail.com":
+                login(request, user)
+                return redirect('product_list')
             
         else:
             messages.error(request, "Bad Credentials")
-            return redirect('login')
+            return redirect('main')
 
     return render(request, "tuckshop/login.html", {"status":status})

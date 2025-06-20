@@ -7,6 +7,7 @@ from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, UserM
 # Create your models here.
 
 class CustomUserManager(UserManager):
+    # Basic user creation function
     def _create_user(self, email, password, **extra_fields):
         if not email: 
             raise ValueError("You have not provided a valid email")
@@ -15,60 +16,37 @@ class CustomUserManager(UserManager):
         user = self.model(email=email, **extra_fields)
         user.set_password(password)
         user.save(using=self._db)
-
         return user
-
-
+    # Creates a basic user and sets admin and superuser status to false
     def create_user(self, email=None, password=None, **extra_fields):
         extra_fields.setdefault('is_staff', False)
         extra_fields.setdefault('is_superuser', False)
         return self._create_user(email, password, **extra_fields)
-    # def create_finance_admin(self, email=None, password=None, **extra_fields):
-    #     extra_fields.setdefault('is_staff', False)
-    #     extra_fields.setdefault('is_financeadmin', True)
-    #     return self._create_user(email, password, **extra_fields)
-    
-    # def create_shopowner(self, email=None, password=None, **extra_fields):
-    #     extra_fields.setdefault('is_staff', True)
-    #     extra_fields.setdefault('is_active', False)
-    #     extra_fields.setdefault('is_superuser', False)
-    #     return self._create_user(email, password, **extra_fields)
-    
-    # def create_financeadmin(self, email=None, password=None, **extra_fields):
-    #     extra_fields.setdefault('is_staff', False)
-    #     extra_fields.setdefault('is_superuser', False)
-    #     extra_fields.setdefault('is_financeadmin', True)
-    #     return self._create_user(email, password, **extra_fields)
-    
+     # Creates a superuser and sets admin and superuser status to True
     def create_superuser(self, email=None, password=None, **extra_fields):
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
         return self._create_user(email, password, **extra_fields)
     
 
-
+# This is the custom user model that allows login and authentication with email and password
 class User(AbstractBaseUser, PermissionsMixin):
-    
     email = models.EmailField(blank=True, default='', unique=True)
     first_name = models.CharField(max_length=255, blank=True, default='')
     last_name = models.CharField(max_length=255, blank=True, default='')
-    
     is_active = models.BooleanField(default=True)
     is_superuser = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
     is_financeadmin = models.BooleanField(default=False)
-
     date_joined = models.DateTimeField(default=timezone.now)
     last_login = models.DateTimeField(blank=True, null=True)
 
-
-    objects = CustomUserManager()
-
+# The .objects points to the CustomUserManager which contains the methods for user creation
+    objects = CustomUserManager() 
+# The username field from the default user is replaced with the email to allow for authentication via email
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
-    
-
     class Meta:
         verbose_name = 'User'
         verbose_name_plural = 'Users'
@@ -79,8 +57,11 @@ class User(AbstractBaseUser, PermissionsMixin):
     def get_short_name(self):
         return self.first_name or self.email.split('@')[0]
     
+# Create a customer instance linked to a specific user instance
 class Customer(models.Model):
+    # One to one field with an existing user instance
     user = models.OneToOneField(User,primary_key=True, on_delete=models.CASCADE, related_name='customer_profile', default='', unique=True)
+    # Choices for dropdown in the various selections. Passed to html template view
     year_choices = [
         ("MYP4", "MYP4"),
         ("MYP5", "MYP5"),
@@ -124,6 +105,9 @@ class Customer(models.Model):
     parent2_first_name = models.CharField(max_length=255, blank=True, default='')
     parent2_last_name = models.CharField(max_length=255, blank=True, default='')
     student_code = models.CharField(max_length=7, blank=True, default='', unique='True')
+
+    # Customer model method that allows to create generate a student_code
+    # Student code consists of the first three letters of the student last name and a unique 4 digit code
     def generate_student_code(self):
         length = 4
         characters =  string.digits

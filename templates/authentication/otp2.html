@@ -13,11 +13,13 @@
    <script src="{% static 'pin.js' %}" defer></script>
   </head>
   <body>
+    
     <div class="container">
         <h2>Enter OTP</h2>
       <header>
         <img id="logo" src="{% static 'sos-pay-high-resolution-logo-transparent.png'%}" alt="logo">
       </header>
+      <h4>OTP has been sent to your mail</h4>
       <form action="/login/otp" method="post">
         {% csrf_token %}
         <div class="input-field">

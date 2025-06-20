@@ -164,10 +164,7 @@
                 warning_alert('One or More Extra Fields is Outta Line!!')
                 return
             }
-            if (validate_email_ending(email) == false) {
-                warning_alert('Email must end in @soshgic.edu.gh !!')
-                return
-            }
+    
             
             // Submit the form if validation passes
             alert("Validation passed. Signing in...");
@@ -199,10 +196,7 @@
                 warning_alert('A field is Outta Line!!')
                 return
             }
-            if (validate_email_ending(email) == false) {
-                watning_alert('Email must end in @soshgic.edu.gh !!')
-                return
-            }
+            
             if (pass1 != pass2){
                 warning_alert('Passwords do not match')
                 return

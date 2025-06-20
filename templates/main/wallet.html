@@ -108,9 +108,11 @@
               <a href="/pay"><button class="btn view_more_btn">
                 Add funds <i class="ri-arrow-right-line"></i>
               </button></a>
-              <a href="/pay"><button class="btn view_more_btn">
-                Request Funds <i class="ri-arrow-right-line"></i>
-              </button></a>
+              <form method="POST" action="/wallet/request">
+                {% csrf_token %}
+                <button type="submit" class="btn view_more_btn" onclick="this.disabled=true; this.form.submit();">Request Funds <i class="ri-arrow-right-line"></i></button>
+              </form>
+              
             <br>
             <br> 
           </div>

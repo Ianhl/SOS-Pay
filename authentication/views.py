@@ -97,7 +97,7 @@ def signin(request):
                 # request.session['user_email']= email
                 
                 # return redirect('otp')
-                send_otp(request)
+                # send_otp(request)
                 email_otp= send_otp(request)
                 # email_otp = send_otp(request)
                 subject = "Email Verification!"
@@ -122,8 +122,8 @@ def signout(request):
     messages.success(request, "Logged out successfully")
     return redirect('main')
 
-def pin(request, user_id):
-    user = User.objects.get(user_id=user_id)
+def pin(request):
+    user = request.user
     if request.method == "POST":
         p1 = request.POST['p1']
         p2 = request.POST['p2']
@@ -161,6 +161,7 @@ def otp_view(request):
         p5 = request.POST['p5']
         p6 = request.POST['p6']
         otp = int(str(p1)+str(p2)+str(p3)+str(p4)+str(p5)+str(p6))
+        print(otp)
         
         email = request.session['email']
         user =  get_object_or_404(User, email=email)
@@ -199,7 +200,7 @@ def otp_view(request):
 #     return render(request, "authentication/signinup.html", {"status":status})
 
 def multi(request, user_id):
-    user = User.objects.get(user_id=user_id)
+    user = User.objects.get(id=user_id)
     if request.method == "POST":
         grad_year = request.POST['grad_year']
         year_group = request.POST['year_group']
@@ -230,8 +231,9 @@ def multi(request, user_id):
         
         customer.is_active = True
         customer.save()
+        login(request, user)
         
-        return redirect(f'/login/pin/{user_id}/')  
+        return redirect('pin')  
         
     return render(request, "authentication/multi.html")
 

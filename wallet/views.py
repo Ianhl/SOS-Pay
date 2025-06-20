@@ -1,5 +1,6 @@
 from django.shortcuts import get_object_or_404, render, redirect
-
+from django.core.mail import send_mail
+from authentication.models import Customer
 from wallet.models import Wallet, Transaction
 from main.views import main
 from django.core.paginator import Paginator
@@ -20,5 +21,20 @@ def wallet(request):
         return render(request, "main/wallet.html" , {'fname':fname, 'balance':balance, 'private_code':private_code, 'wallet':wallet, 'page_obj':page_obj})
     else: 
         return redirect('main')
+
+def request_funds(request):
+    if request.method == "POST":
+        user = request.user
+        customer = get_object_or_404(Customer,user=user)
+        wallet = get_object_or_404(Wallet, user = user)
+        wallet_code = wallet.private_code
+        subject = "Funds request"
+        message = "Hello " + customer.parent1_first_name +  "!!\n" + "Welcome to SOS Pay\n.\n Your ward will like to request some funds. Go to http://127.0.0.1:8000/pay to make the transaction.\n their unique wallet codeis:" +wallet_code
+        from_email = 'larteyian@gmail.com'
+        receipient_list = [customer.parent1_email]
+        send_mail(subject, message, from_email, receipient_list, fail_silently=False)
+        return redirect('wallet')
+    return render(request, 'base.html')
+
 
 

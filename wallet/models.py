@@ -42,11 +42,7 @@ class Wallet(models.Model):
             code = ''.join(random.choice(characters) for _ in range(length))
             if not Wallet.objects.filter(private_code=code).exists():
                 return code    
-        
-    
-    # def generate_private_code(self):
-    #     # Generate a unique private code
-    #     return str(uuid.uuid4().hex[:12].upper())  # Example: 8e3a8b4b4c6e
+
 
     def deposit(self, value, sender):
     
