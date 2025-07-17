@@ -3,7 +3,7 @@ import secrets
 
 from django.http import JsonResponse
 from .paystack import PayStack
-from pypaystack import Transaction
+from paystackapi.paystack import Paystack
 from django.conf import settings
 
 # Create your models here.
@@ -31,19 +31,30 @@ class Payment(models.Model):
         return self.amount *100
 
     def verify_payment(self):
-        transaction = Transaction(authorization_key= settings.PAYSTACK_SECRET_KEY)
-        response = transaction.verify(self.ref)
-        data = JsonResponse(response, safe=False)
-        status = response[1]
-        result = response[3]
-        if status:
-            if result['amount']/100 == self.amount:
-                self.verified = True 
-            self.save()
-        if self.verified:
-            return True
-        else:
+        paystack = Paystack(secret_key=settings.PAYSTACK_SECRET_KEY)
+        response = paystack.transaction.verify(self.ref)
+
+        if response['status']:
+            data = response['data']
+            if data['status'] == 'success' and data['amount'] == self.amount_value():
+                self.verified = True
+                self.save()
+                return True
             return False
+        
+        # transaction = Transaction(authorization_key= settings.PAYSTACK_SECRET_KEY)
+        # response = transaction.verify(self.ref)
+        # data = JsonResponse(response, safe=False)
+        # status = response[1]
+        # result = response[3]
+        # if status:
+        #     if result['amount']/100 == self.amount:
+        #         self.verified = True 
+        #     self.save()
+        # if self.verified:
+        #     return True
+        # else:
+        #     return False
     # def verify(request, id):
 #     transaction = Transaction(authorization_key= settings.PAYSTACK_SECRET_KEY)
 #     response = transaction.verify(id)
