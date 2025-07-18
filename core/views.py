@@ -6,7 +6,7 @@ from . import forms
 from django.contrib import messages
 from django.conf import settings
 from .models import Payment
-from pypaystack import Transaction, Customer, Plan
+from paystackapi.transaction import Transaction
 from wallet.models import Wallet
 from main.views import main
 
