@@ -165,6 +165,7 @@ def otp_view(request):
         user =  get_object_or_404(User, email=email)
         otp_secret_key = request.session['otp_secret_key']
         otp_valid_date = request.session['otp_valid_date']
+        
 
         if otp_secret_key and otp_valid_date is not None:
             valid_until = datetime.fromisoformat(otp_valid_date)
@@ -179,12 +180,12 @@ def otp_view(request):
                     del request.session['otp_valid_date']
 
                     return redirect('main')
-            else:
-                messages.error(request, "Invalid otp")
-                print("Invalid")
+                else:
+                    print("Invalid")
+            else: 
+                print("OTP expired")
         else: 
-            messages.error(request, "OTP expired")
-            print("OTP expired")
+                print("OTP error")
 
     
 
