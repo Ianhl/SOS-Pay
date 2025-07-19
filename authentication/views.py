@@ -176,8 +176,8 @@ def otp_view(request):
                     print("Success")
                     login(request, user)
 
-                    del request.session['otp_secret_key']
-                    del request.session['otp_valid_date']
+                    request.session.pop('otp_secret_key', None)
+                    request.session.pop('otp_valid_date', None)
 
                     return redirect('main')
                 else:
