@@ -105,7 +105,7 @@ def signin(request):
                 from_email = 'larteyian@gmail.com'
                 receipient_list = [user.email]
                 send_mail(subject, message, from_email, receipient_list, fail_silently=False)
-                request.session['email']=email
+                request.session['email']=user.email
                 return redirect('otp')
 
             
@@ -151,8 +151,6 @@ def pin(request):
 
 
 def otp_view(request):
-    
-
     if request.method == "POST":
         p1 = request.POST['p1']
         p2 = request.POST['p2']
@@ -161,21 +159,19 @@ def otp_view(request):
         p5 = request.POST['p5']
         p6 = request.POST['p6']
         otp = int(str(p1)+str(p2)+str(p3)+str(p4)+str(p5)+str(p6))
-        print(otp)
-        
-        email = request.session['email']
+            
+        email = request.session.get('email')
         user =  get_object_or_404(User, email=email)
-
         otp_secret_key = request.session['otp_secret_key']
         otp_valid_date = request.session['otp_valid_date']
-        
+
         if otp_secret_key and otp_valid_date is not None:
             valid_until = datetime.fromisoformat(otp_valid_date)
 
             if valid_until > datetime.now():
                 totp = pyotp.TOTP(otp_secret_key, interval=60)
                 if totp.verify(otp):
-                    user =  get_object_or_404(User, email=email)
+                    print("Success")
                     login(request, user)
 
                     del request.session['otp_secret_key']
@@ -184,11 +180,12 @@ def otp_view(request):
                     return redirect('main')
             else:
                 messages.error(request, "Invalid otp")
+                print("Invalid")
         else: 
             messages.error(request, "OTP expired")
+            print("OTP expired")
 
-    else: 
-        messages.error(request, "Something went wrong")
+    
 
     return render(request, 'authentication/otp2.html')       
        
