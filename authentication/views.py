@@ -100,7 +100,6 @@ def signin(request):
                 # return redirect('otp')
                 # send_otp(request)
                 email_otp= send_otp(request)
-                # email_otp = send_otp(request)
                 subject = "Email Verification!"
                 message = "Hello " + user.first_name +  "!!\n" + "Welcome to SOS Pay\n Thank You for visiting this site.\n Below is the otp to complete your login. Please type in this otp in the website to login:\n" +email_otp
                 from_email = 'larteyian@gmail.com'
@@ -159,7 +158,7 @@ def otp_view(request):
         p4 = request.POST['p4']
         p5 = request.POST['p5']
         p6 = request.POST['p6']
-        otp = int(str(p1)+str(p2)+str(p3)+str(p4)+str(p5)+str(p6))
+        otp = ''.join([p1,p2,p3,p4,p5,p6])
             
         email = request.session.get('email')
         user =  get_object_or_404(User, email=email)
@@ -172,7 +171,7 @@ def otp_view(request):
 
             if valid_until > datetime.now():
                 totp = pyotp.TOTP(otp_secret_key, interval=60)
-                if totp.verify(otp):
+                if totp.verify(otp,valid_window=1):
                     print("Success")
                     login(request, user)
 
