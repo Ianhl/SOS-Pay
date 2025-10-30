@@ -30,6 +30,15 @@ Built with a **modular architecture**, it offers **scalability**, **data integri
 
 ---
 
+## 🔐 Security & Compliance  
+✅ Encrypted user authentication (Django sessions)  
+🔒 HTTPS enforced in production  
+⚙️ Environment variables for API keys  
+🧱 Input validation and transaction limits  
+📋 Audit trails and transaction logs  
+
+---
+
 ## 🧠 Tech Stack
 
 | Layer | Technologies |
