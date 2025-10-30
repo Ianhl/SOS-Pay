@@ -46,4 +46,9 @@ Built with a **modular architecture**, it offers **scalability**, **data integri
 
 
 # 🧑‍💻 UI
+## Landing Page
+![Landing Page](/IMG_3051.jpg "Landing page")
+
+## Sign in/up Page
+![Sign-in Page](/IMG_3052.jpg "Signin/Login")
 
