@@ -8,8 +8,6 @@
 
 ## 🚀 Overview
 
-## 🚀 Overview
-
 **SOS Pay** is a **Django-based digital payment platform** I developed to address **cashless transaction challenges** at my school.  
 It features **payment gateway integration** for seamless processing and **PIN encryption** to ensure user security.  
 Built with a **modular architecture**, it offers **scalability**, **data integrity**, and **efficient financial operations** — all within a sleek, responsive interface.
@@ -47,8 +45,22 @@ Built with a **modular architecture**, it offers **scalability**, **data integri
 
 # 🧑‍💻 UI
 ## Landing Page
-![Landing Page](/IMG_3051.jpg "Landing page")
+![Landing Page](/IMG_3051.jpg "Landing page")  
 
 ## Sign in/up Page
-![Sign-in Page](/IMG_3052.jpg "Signin/Login")
+![Sign-in Page](/IMG_3052.jpg "Signin/Login")  
+
+
+# 🙌 Acknowledgements
+💼 Inspired by fintech innovation in Ghana and across Africa  
+🧩 Built by Ian Lartey — developer, robotics enthusiast, and CS student  
+🌍 Created as a side project to contribute to the digitalisation of payments in Africa. 
+
+# 🧑‍💻 About the Developer
+Ian Lartey   
+🎓 CS student at the University of Alberta  
+🤖 Passionate about software, robotics, and AI  
+🌍 Focused on building accessible tech that bridges communities  
+🔗 [Linkedin](https://www.linkedin.com/in/ian-lartey-84735627a/ "Linkedin") . [Github](https://github.com/Ianhl "Github")
+
 
