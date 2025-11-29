@@ -26,7 +26,7 @@ Built with a **modular architecture**, it offers **scalability**, **data integri
 🏪 **Merchant Tools** — Handle customer payments and invoices  
 📊 **Transaction Dashboard** — Real-time records and analytics  
 🧩 **Admin Panel** — Manage users, merchants, and system data  
-📱 **Responsive Design** — Optimized for mobile and desktop 
+📱 **Responsive Design** — Optimized for mobile and desktop  
 📧 **Email Notifications** — User alerts and notifications via Email 
 
 ---
