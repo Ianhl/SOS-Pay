@@ -17,12 +17,12 @@ Built with a **modular architecture**, it offers **scalability**, **data integri
 
 ## ✨ Features
 
-✅ **User Authentication** — Sign up, log in, and manage accounts securely 
+✅ **User Authentication** — Sign up, log in, and manage accounts securely  
 🔐 **Time-based OPT authentication** - OTP used in sign-in to improve security  
 💰 **Wallet System** — View balances, top-up funds, and track usage  
 💳 **Paystack Integration** - Allows users to top up funds directly from mobile money/ bank accounts  
-🔄 **Peer-to-Peer Payments** — Instantly send and receive money
-🔐 **Pin encryption** - Encryption algorithm to save user pins. 
+🔄 **Peer-to-Peer Payments** — Instantly send and receive money  
+🔐 **Pin encryption** - Encryption algorithm to save user pins.  
 🏪 **Merchant Tools** — Handle customer payments and invoices  
 📊 **Transaction Dashboard** — Real-time records and analytics  
 🧩 **Admin Panel** — Manage users, merchants, and system data  
@@ -53,23 +53,68 @@ Built with a **modular architecture**, it offers **scalability**, **data integri
 ---
 
 
-# 🧑‍💻 UI
-## Landing Page
-![Landing Page](/IMG_3051.jpg "Landing page")  
-
-## Sign in/up Page
-![Sign-in Page](/IMG_3052.jpg "Signin/Login")  
+# 🧑‍💻 UI  
+<table>
+  <tr>
+    <td align="center">
+      <img src="/IMG_3051.jpg" width="550"/><br/>
+      <sub>Landing</sub>
+    </td>
+    <td align="center">
+      <img src="/IMG_3052.jpg" width="550"/><br/>
+      <sub>Sign In</sub>
+    </td>
+  </tr>
+  <br>
+  <tr>
+    <td align="center">
+      <img src="/Screenshot 2025-11-28 at 23.30.26.png" width="550"/><br/>
+      <sub>Tuckshop Dashboard</sub>
+    </td>
+    <td align="center">
+      <img src="/Screenshot 2025-11-28 at 22.53.29.png" width="550"/><br/>
+      <sub>Add Products</sub>
+    </td>
+  </tr>
+  <br>
+  <tr>
+    <td align="center">
+      <img src="/Screenshot 2025-11-28 at 23.04.22.png" width="550"/><br/>
+      <sub>Tuckshop Store View</sub>
+    </td>
+    <td align="center">
+      <img src="/Screenshot 2025-11-28 at 23.04.55.png" width="550"/><br/>
+      <sub>Cart</sub>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <img src="/Screenshot 2025-11-28 at 23.06.13.png" width="550"/><br/>
+      <sub>Checkout</sub>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <img src="/IMG_3111 2.jpg" width="550"/><br/>
+      <sub>Email Integration</sub>
+    </td>
+    <td align="center">
+      <img src="/Screenshot 2025-11-28 at 22.19.14.png" width="550"/><br/>
+      <sub>Paystack Integration</sub>
+    </td>
+  </tr>
+</table>
 
 
 # 🙌 Acknowledgements
 💼 Inspired by fintech innovation in Ghana and across Africa  
-🧩 Built by Ian Lartey — developer, robotics enthusiast, and CS student  
+🧩 Built by Ian Lartey — web developer, tech enthusiast, and CS student  
 🌍 Created as a side project to contribute to the digitalisation of payments in Africa. 
 
 # 🧑‍💻 About the Developer
 Ian Lartey   
 🎓 CS student at the University of Alberta  
-🤖 Passionate about software, robotics, and AI  
+🤖 Passionate about software, web development, robotics, and AI  
 🌍 Focused on building accessible tech that bridges communities  
 🔗 [Linkedin](https://www.linkedin.com/in/ian-lartey-84735627a/ "Linkedin") . [Github](https://github.com/Ianhl "Github")
 
